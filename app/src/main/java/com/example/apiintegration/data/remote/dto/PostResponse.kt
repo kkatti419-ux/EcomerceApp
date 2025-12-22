@@ -1,29 +1,32 @@
 package com.example.apiintegration.data.remote.dto
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 // PostResponse.kt
 data class PostsWrapper(
-    val posts: List<PostResponse>,
-    val total: Int?,
-    val skip: Int?,
-    val limit: Int?
+    @Json(name = "posts") val posts: List<PostResponse>,
+    @Json(name = "total") val total: Int?,
+    @Json(name = "skip") val skip: Int?,
+    @Json(name = "limit") val limit: Int?
 )
 
+@JsonClass(generateAdapter = true)
 data class PostResponse(
-    val id: Int,
-    val title: String,
-    val body: String,
-    val tags: List<String> = emptyList(),
-    val reactions: Reactions = Reactions(),
-    val views: Int = 0,
-    val userId: Int = 0
+    @Json(name = "id") val id: Int,
+    @Json(name = "title") val title: String,
+    @Json(name = "body") val body: String,
+    @Json(name = "tags") val tags: List<String> = emptyList(),
+    @Json(name = "reactions") val reactions: Reactions = Reactions(),
+    @Json(name = "views") val views: Int = 0,
+    @Json(name = "userId") val userId: Int = 0
 )
 
+@JsonClass(generateAdapter = true)
 data class Reactions(
-    val likes: Int = 0,
-    val dislikes: Int = 0
+    @Json(name = "likes") val likes: Int = 0,
+    @Json(name = "dislikes") val dislikes: Int = 0
 )
 
 

@@ -40,9 +40,7 @@ class AuthViewModel @Inject constructor(
             }
         }
     }
-
 }
-
 
 sealed class AuthUiState {
     object Idle : AuthUiState()

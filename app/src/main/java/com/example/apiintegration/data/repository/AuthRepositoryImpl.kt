@@ -18,7 +18,7 @@ class AuthRepositoryImpl @Inject constructor(
                 password = password,
                 expiresInMins = 30 // Default value
             )
-            val response = api.authentication("application/json",request)
+            val response = api.authentication("application/json", request)
 
             Result.success(response.toDomain())
         } catch (e: Exception) {

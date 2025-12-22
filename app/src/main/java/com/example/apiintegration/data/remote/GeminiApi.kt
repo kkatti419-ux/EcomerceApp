@@ -6,8 +6,6 @@ import com.example.apiintegration.data.remote.dto.LoginResponse
 import com.example.apiintegration.data.remote.dto.GeminiRequest
 import com.example.apiintegration.data.remote.dto.GeminiResponse
 import com.example.apiintegration.data.remote.dto.PostsWrapper
-import com.example.apiintegration.domain.model.Post
-import com.example.apiintegration.domain.model.Root
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header

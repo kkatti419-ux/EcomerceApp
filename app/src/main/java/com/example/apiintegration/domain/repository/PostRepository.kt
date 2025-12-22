@@ -1,8 +1,8 @@
 package com.example.apiintegration.domain.repository
 
-import com.example.apiintegration.data.remote.dto.PostResponse
+import com.example.apiintegration.domain.model.Post
 
 interface PostRepository {
-    suspend fun getPosts(): Result<List<PostResponse>>
-    suspend fun getPost(): Result<PostResponse>
+    suspend fun getPosts(): Result<List<Post>>
+    suspend fun getPost(id: Int): Result<Post>
 }

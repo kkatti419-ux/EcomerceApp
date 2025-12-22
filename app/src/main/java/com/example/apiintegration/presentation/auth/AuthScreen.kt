@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.Navigator
 import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,6 +31,7 @@ fun AuthScreen(
     viewModel: AuthViewModel = hiltViewModel(),
     onLoginSuccess: (String) -> Unit,
     onForgotPassword: (String) -> Unit,
+
 // ✨ new function
 //    Unit = means function returns nothing.
 //    Equivalent to void in Java.
@@ -185,10 +187,12 @@ fun AuthScreen(
 
                         // Trigger navigation immediately with proper key to prevent re-triggering
                         // Using user as key ensures this only runs once per successful login
-                        LaunchedEffect(key1 = user) {
-//                            onLoginSuccess(user.username)
-                            onForgotPassword(user.username)
-                        }
+
+
+//                        LaunchedEffect(key1 = user) {
+////                            onLoginSuccess(user.username)
+//                            onForgotPassword(user.username)
+//                        }
 
                         // Show minimal UI during navigation transition
                         Column(

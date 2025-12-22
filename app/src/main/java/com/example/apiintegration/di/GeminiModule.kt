@@ -30,9 +30,10 @@ object GeminiModule {
         // We create a new Retrofit instance here because we might want different configuration
         // (like base URL, though we override it in the interface) or just to be safe.
         // In this case, we reuse the OkHttpClient and Moshi provided by the main NetworkModule.
+        // Base URL is set to dummyjson.com for posts API, but Gemini and auth endpoints use full URLs
 
         return Retrofit.Builder()
-            .baseUrl("https://generativelanguage.googleapis.com/") // Base URL is required but overridden in the interface
+            .baseUrl("https://dummyjson.com/") // Base URL for posts API, other endpoints use full URLs
             .client(okHttpClient).addConverterFactory(MoshiConverterFactory.create(moshi)).build()
             .create(GeminiApi::class.java)
     }
