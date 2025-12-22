@@ -2,6 +2,11 @@ package com.example.apiintegration.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+
+// Brand / Primary color
+val BluePrimary = Color(0xFF004CFF)
+
+
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)

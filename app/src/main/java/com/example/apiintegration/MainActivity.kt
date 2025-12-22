@@ -18,10 +18,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ApiIntegrationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+//                Scaffold(modifier = Modifier.fillMaxSize()) {
+//                    innerPadding ->
                     // We pass the modifier with padding to the screen to handle edge-to-edge correctly
                     AppNavGraph()
-                }
+//                }
             }
         }
     }
