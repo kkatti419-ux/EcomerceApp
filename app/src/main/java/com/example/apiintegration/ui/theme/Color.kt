@@ -6,6 +6,13 @@ import androidx.compose.ui.graphics.Color
 // Brand / Primary color
 val BluePrimary = Color(0xFF004CFF)
 
+val InputBackgroundLight = Color(0xFFF2F2F2)
+
+// Dark theme equivalent (IMPORTANT)
+val InputBackgroundDark = Color(0xFF1E1E1E)
+
+
+
 
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)

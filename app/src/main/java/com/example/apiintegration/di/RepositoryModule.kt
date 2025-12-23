@@ -6,6 +6,7 @@ import com.example.apiintegration.data.repository.AuthRepositoryImpl
 import com.example.apiintegration.domain.repository.AuthRepository
 import com.example.apiintegration.data.repository.GeminiRepositoryImpl
 import com.example.apiintegration.domain.repository.GeminiRepository
+import com.example.apiintegration.presentation.auth.AuthViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -33,4 +34,11 @@ abstract class RepositoryModule {
     abstract fun bindGeminiRepository(
         geminiRepositoryImpl: GeminiRepositoryImpl
     ): GeminiRepository
+
+//    @Binds
+//    @Singleton
+//    abstract fun bindCountryRepository(
+//        impl: AuthRepositoryImpl
+//    ): AuthRepository
+
 }

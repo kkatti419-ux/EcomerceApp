@@ -1,4 +1,4 @@
-package com.example.apiintegration.common
+package com.example.apiintegration.common.ui
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack

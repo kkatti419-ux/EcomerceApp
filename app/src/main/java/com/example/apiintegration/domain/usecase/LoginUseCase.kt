@@ -10,4 +10,6 @@ class LoginUseCase @Inject constructor(
     suspend operator fun invoke(username: String, password: String): Result<User> {
         return repository.login(username, password)
     }
+
+
 }

@@ -1,7 +1,8 @@
-package com.example.apiintegration.common
+package com.example.apiintegration.common.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -26,11 +27,16 @@ fun AppOutlinedTextField(
 
     textColor: Color = Color.Black,
     labelColor: Color = Color.Gray,
-    focusedLabelColor: Color = Color.Black,
 
-    focusedBorderColor: Color =Color.Black,
-    unfocusedBorderColor: Color = Color.Black,
+    focusedLabelColor: Color = Color.Black,
+    focusedBorderColor: Color? = null,
+
+    unfocusedBorderColor:Color? = null,
     cursorColor: Color = Color.Black,
+
+    focusedContainerColor: Color = MaterialTheme.colorScheme.surface,
+    unfocusedContainerColor: Color = MaterialTheme.colorScheme.surface,
+    disabledContainerColor: Color? = null,
 
     visualTransformation: VisualTransformation = VisualTransformation.None,
     trailingIcon: @Composable (() -> Unit)? = null,
@@ -52,10 +58,16 @@ fun AppOutlinedTextField(
             focusedTextColor = textColor,
             unfocusedTextColor = textColor,
             cursorColor = cursorColor,
+
             focusedLabelColor = focusedLabelColor,
             unfocusedLabelColor = labelColor,
-            focusedBorderColor = focusedBorderColor,
-            unfocusedBorderColor = unfocusedBorderColor
+
+            focusedBorderColor = focusedBorderColor ?: Color.Transparent,
+            unfocusedBorderColor = unfocusedBorderColor?:Color.Transparent,
+
+            focusedContainerColor =focusedContainerColor,
+            unfocusedContainerColor = unfocusedContainerColor,
+            disabledContainerColor = disabledContainerColor?:Color.Transparent
         )
     )
 }

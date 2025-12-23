@@ -1,4 +1,4 @@
-package com.example.apiintegration.common
+package com.example.apiintegration.common.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.apiintegration.R
 
 @Composable
 fun PrimaryButton(

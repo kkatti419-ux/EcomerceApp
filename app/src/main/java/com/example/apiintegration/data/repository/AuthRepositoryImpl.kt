@@ -1,6 +1,8 @@
 package com.example.apiintegration.data.repository
 
+import com.example.apiintegration.data.local.CountryDataSource
 import com.example.apiintegration.data.remote.GeminiApi
+import com.example.apiintegration.data.remote.dto.Country
 import com.example.apiintegration.data.remote.dto.LoginRequest
 import com.example.apiintegration.data.remote.dto.LoginResponse
 import com.example.apiintegration.domain.model.User
@@ -24,6 +26,10 @@ class AuthRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             Result.failure(e)
         }
+    }
+
+    override fun getCountries(): List<Country> {
+         return CountryDataSource.asianCountries
     }
 
     private fun LoginResponse.toDomain(): User {

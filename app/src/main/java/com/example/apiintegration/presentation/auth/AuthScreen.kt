@@ -10,9 +10,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.apiintegration.common.AppOutlinedTextField
+import com.example.apiintegration.common.ui.AppOutlinedTextField
 import com.example.apiintegration.R
-import com.example.apiintegration.common.PrimaryButton
+import com.example.apiintegration.common.ui.PrimaryButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -72,6 +72,7 @@ fun AuthScreen(
 
                 )
                 AppOutlinedTextField(
+
                     value = username,
                     onValueChange = { username = it },
                     label = "Username",
@@ -91,7 +92,8 @@ fun AuthScreen(
                 PrimaryButton(
                     text = "Continue",
                     onClick = { },
-                    backgroundColor = Color.Black
+                    backgroundColor = MaterialTheme.colorScheme.background
+//                        Color.Black
                 )
 
 

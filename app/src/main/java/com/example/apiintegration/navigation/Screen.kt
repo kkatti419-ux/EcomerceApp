@@ -2,21 +2,19 @@ package com.example.apiintegration.navigation
 
 
 sealed class Screen(val route: String) {
+    object StartScreen : Screen("start")
     object Auth : Screen("auth")
     object Todo : Screen("todo/{data}") {
         fun createRoute(data: String) = "todo/$data"
     }
 
-    object Home : Screen("home/{username}") {
-        fun createRoute(username: String) = "home/$username"/*
-               fun createRoute(username: String) = "home/$username"
-               Kotlin sees "home/$username" is a String, so it infers that the return type is: String        🟩 Without Inference (Explicit)
-               fun createRoute(username: String): String {
-                   return "home/$username"
-                }
-         */
-
-        fun validateInput(text: String): Unit {
+    object Home : Screen("home/{username}/{userId}/{email}") {
+        fun createRoute(
+            username: String,
+            userId: String,
+            email: String,
+        ): String {
+            return "home/$username/$userId/$email"
         }
     }
 }
