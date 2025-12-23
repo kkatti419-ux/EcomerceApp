@@ -7,14 +7,24 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.apiintegration.presentation.auth.AuthScreen
+import com.example.apiintegration.presentation.auth.StartScreen
 import com.example.apiintegration.presentation.posts.PostScreen
 import com.example.apiintegration.presentation.todo.Todo
 
 @Composable
-fun AppNavGraph(startDestination: String = Screen.Auth.route) {
+fun AppNavGraph(startDestination: String = Screen.StartScreen.route) {
     val navController = rememberNavController()
 
+
+
+
     NavHost(navController = navController, startDestination = startDestination) {
+
+        composable(route = Screen.StartScreen.route) {
+            StartScreen();
+        }
+
+
         composable(Screen.Auth.route) {
             AuthScreen(
                 onForgotPassword = { value ->

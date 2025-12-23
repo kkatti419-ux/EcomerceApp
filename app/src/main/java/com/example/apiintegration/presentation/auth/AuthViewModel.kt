@@ -1,5 +1,6 @@
 package com.example.apiintegration.presentation.auth
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.apiintegration.domain.model.User
@@ -17,6 +18,13 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<AuthUiState>(AuthUiState.Idle)
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
+
+    private val _profileImage = MutableStateFlow<Uri?>(null)
+    val profileImage = _profileImage.asStateFlow()
+
+    fun onProfileImageSelected(uri: Uri) {
+        _profileImage.value = uri
+    }
 
 
     fun sendPrompt(username: String, password: String) {

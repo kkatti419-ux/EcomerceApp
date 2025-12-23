@@ -2,6 +2,7 @@ package com.example.apiintegration.navigation
 
 
 sealed class Screen(val route: String) {
+    object StartScreen : Screen("start")
     object Auth : Screen("auth")
     object Todo : Screen("todo/{data}") {
         fun createRoute(data: String) = "todo/$data"
