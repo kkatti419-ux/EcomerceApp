@@ -41,4 +41,10 @@ abstract class RepositoryModule {
 //        impl: AuthRepositoryImpl
 //    ): AuthRepository
 
+    @Binds
+    @Singleton
+    abstract fun bindLocalUserRepository(
+        localUserRepositoryImpl: com.example.apiintegration.data.repository.LocalUserRepositoryImpl
+    ): com.example.apiintegration.domain.repository.LocalUserRepository
+
 }
