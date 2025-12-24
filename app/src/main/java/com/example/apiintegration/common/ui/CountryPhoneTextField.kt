@@ -11,9 +11,7 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -21,7 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.apiintegration.data.remote.dto.Country
 
@@ -30,27 +27,13 @@ fun CountryPhoneTextField(
     phoneNumber: String,
     onPhoneChange: (String) -> Unit,
 
-    selectedCountry: Country?,
+    selectedCountry: Country,
     onCountrySelected: (Country) -> Unit,
 
     countries: List<Country>,
-    modifier: Modifier = Modifier,
-    textColor: Color = Color.Black,
-    labelColor: Color = Color.Gray,
-
-    focusedLabelColor: Color = Color.Black,
-    focusedBorderColor: Color? = null,
-
-    unfocusedBorderColor: Color? = null,
-    cursorColor: Color = Color.Black,
-
-    focusedContainerColor: Color = MaterialTheme.colorScheme.surface,
-    unfocusedContainerColor: Color = MaterialTheme.colorScheme.surface,
-    disabledContainerColor: Color? = null,
-
-    ) {
+    modifier: Modifier = Modifier
+) {
     var expanded = remember { mutableStateOf(false) }
-
 
     OutlinedTextField(
         value = phoneNumber,
@@ -58,21 +41,6 @@ fun CountryPhoneTextField(
         modifier = modifier.fillMaxWidth(),
         singleLine = true,
         label = { Text("Phone Number") },
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedTextColor = textColor,
-            unfocusedTextColor = textColor,
-            cursorColor = cursorColor,
-
-            focusedLabelColor = focusedLabelColor,
-            unfocusedLabelColor = labelColor,
-
-            focusedBorderColor = focusedBorderColor ?: Color.Transparent,
-            unfocusedBorderColor = unfocusedBorderColor ?: Color.Transparent,
-
-            focusedContainerColor = focusedContainerColor,
-            unfocusedContainerColor = unfocusedContainerColor,
-            disabledContainerColor = disabledContainerColor ?: Color.Transparent
-        ),
 
         leadingIcon = {
             Row(
@@ -86,7 +54,8 @@ fun CountryPhoneTextField(
                             .padding(horizontal = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = selectedCountry?.phoneCode ?: "Code")
+                        Text(text = "")
+//                            selectedCountry.phoneCode)
                         Icon(
                             imageVector = Icons.Default.ArrowDropDown,
                             contentDescription = null
@@ -100,7 +69,7 @@ fun CountryPhoneTextField(
                         countries.forEach { country ->
                             DropdownMenuItem(
                                 text = {
-                                    Text("${country.name} (${country.phoneCode})")
+                                    Text("${country.name} (${country})")
                                 },
                                 onClick = {
                                     onCountrySelected(country)

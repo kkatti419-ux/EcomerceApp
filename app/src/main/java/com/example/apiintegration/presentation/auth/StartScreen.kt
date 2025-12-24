@@ -12,11 +12,9 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,31 +33,31 @@ import com.example.apiintegration.common.ui.PrimaryButton
 import com.example.apiintegration.common.ui.ProfileImagePicker
 import com.example.apiintegration.ui.theme.ApiIntegrationTheme
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph
 import coil.compose.rememberAsyncImagePainter
 import com.example.apiintegration.common.ui.CountryPhoneTextField
 import com.example.apiintegration.data.remote.dto.Country
-import com.example.apiintegration.navigation.Screen
 
 
 @Composable
-fun StartScreen(navController: NavController ,viewModel: AuthViewModel = hiltViewModel(),onLoginSuccess:(String, String, String, String)->Unit) {
+fun StartScreen(viewModel: AuthViewModel = hiltViewModel()) {
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var country by remember { mutableStateOf("") }
     val profileImageUri by viewModel.profileImage.collectAsState()
-    val countries by viewModel.countries
+
     var phone by remember { mutableStateOf("") }
     var selectedCountry by remember {
-        mutableStateOf(countries.firstOrNull())
+        mutableStateOf(
+            Country("India", "IN", "+91")
+        )
     }
-    val uiState by viewModel.uiState.collectAsState()
 
-
-
-
+    val countries = listOf(
+        Country("India", "IN", "+91"),
+        Country("Japan", "JP", "+81"),
+        Country("China", "CN", "+86")
+    )
 
 
 
@@ -107,9 +105,7 @@ fun StartScreen(navController: NavController ,viewModel: AuthViewModel = hiltVie
             ProfileImagePicker(
                 imageUri = profileImageUri,
                 onImagePicked = viewModel::onProfileImageSelected,
-                modifier = Modifier
-                    .size(90.dp)
-                    .align(Alignment.Start)
+                modifier = Modifier.size(90.dp).align(Alignment.Start)
             )
 
 
@@ -139,50 +135,19 @@ fun StartScreen(navController: NavController ,viewModel: AuthViewModel = hiltVie
                 countries = countries
             )
 
+
+//            AppOutlinedTextField(
+//                value = country,
+//                onValueChange = { country = it },
+//                label = "Country"
+//            )
+
             Spacer(Modifier.height(24.dp))
+
             PrimaryButton(
-                onClick = {
-                    viewModel.sendPrompt(username, password,phone,profileImageUri.toString())
-                },
-                text = "Continue"
-//                    when (val state = uiState) {
-//
-//                        is AuthUiState.Error -> "Retry"
-//                        is AuthUiState.Success -> navController.navigate(Screen)
-//                        AuthUiState.Idle -> "Create Account"
-//                        AuthUiState.Loading -> "Loading…"
-//                    }
-
+                onClick = { /* submit */ },
+                text = "Create Account"
             )
-
-            when (val state = uiState) {
-                is AuthUiState.Loading -> {
-                    CircularProgressIndicator()
-                }
-
-                is AuthUiState.Error -> {
-                    Text(
-                        text = state.message,
-                        color = MaterialTheme.colorScheme.error
-                    )
-                }
-
-                is AuthUiState.Success -> {
-                    val user = state.user
-                    LaunchedEffect(user) {
-                        onLoginSuccess(user.username,"kartik","1212",profileImageUri.toString())
-                    }
-
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        CircularProgressIndicator()
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Text("Login Successful! Redirecting…")
-                    }
-                }
-
-                else -> Unit
-            }
-
 
             Spacer(Modifier.height(12.dp))
 
@@ -195,6 +160,12 @@ fun StartScreen(navController: NavController ,viewModel: AuthViewModel = hiltVie
     }
 }
 
-
+@Preview(showBackground = true)
+@Composable
+fun PreviewAuth() {
+    ApiIntegrationTheme {
+        StartScreen()
+    }
+}
 
 
