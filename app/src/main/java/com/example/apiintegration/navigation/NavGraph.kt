@@ -7,13 +7,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.apiintegration.presentation.auth.AuthScreen
-import com.example.apiintegration.presentation.auth.StartScreen
+import com.example.apiintegration.presentation.auth.SignInScreen
 import com.example.apiintegration.presentation.form.ProfileScreen
 import com.example.apiintegration.presentation.posts.PostScreen
 import com.example.apiintegration.presentation.todo.Todo
 
 @Composable
-fun AppNavGraph(startDestination: String = Screen.ProfileScreen.route) {
+fun AppNavGraph(startDestination: String = Screen.Home.route) {
     val navController = rememberNavController()
 
 
@@ -26,7 +26,7 @@ fun AppNavGraph(startDestination: String = Screen.ProfileScreen.route) {
         }
 
         composable(route = Screen.StartScreen.route) {
-            StartScreen(navController, onLoginSuccess = { username, password ->
+            SignInScreen(navController, onLoginSuccess = { username, password ->
                 try {
                         navController.navigate(Screen.Home.createRoute(username,password))
                 }

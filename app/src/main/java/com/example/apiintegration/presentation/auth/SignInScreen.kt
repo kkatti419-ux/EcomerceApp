@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,25 +23,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.apiintegration.R
 import com.example.apiintegration.common.ui.AppOutlinedTextField
 import com.example.apiintegration.common.ui.PrimaryButton
 import com.example.apiintegration.common.ui.ProfileImagePicker
-import com.example.apiintegration.ui.theme.ApiIntegrationTheme
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
 import com.example.apiintegration.common.ui.CountryPhoneTextField
 import com.example.apiintegration.data.remote.dto.Country
 
 
 @Composable
-fun StartScreen(navController: NavController,onLoginSuccess: (String,String) -> Unit,viewModel: AuthViewModel = hiltViewModel(),) {
+fun SignInScreen(navController: NavController,onLoginSuccess: (String,String) -> Unit,viewModel: AuthViewModel = hiltViewModel(),) {
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
