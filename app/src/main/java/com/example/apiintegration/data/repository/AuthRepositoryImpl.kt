@@ -1,6 +1,6 @@
 package com.example.apiintegration.data.repository
 
-import com.example.apiintegration.data.local.CountryDataSource
+import com.example.apiintegration.data.local.UserPreferences
 import com.example.apiintegration.data.remote.GeminiApi
 import com.example.apiintegration.data.remote.dto.Country
 import com.example.apiintegration.data.remote.dto.LoginRequest
@@ -10,7 +10,8 @@ import com.example.apiintegration.domain.repository.AuthRepository
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val api: GeminiApi
+    private val api: GeminiApi,
+    private val userPreferences: UserPreferences
 ) : AuthRepository {
 
     override suspend fun login(username: String, password: String): Result<User> {
@@ -29,7 +30,11 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun getCountries(): List<Country> {
-         return CountryDataSource.asianCountries
+         return com.example.apiintegration.data.local.CountryDataSource.asianCountries
+    }
+
+    override suspend fun saveCredentials(username: String, password: String) {
+        userPreferences.saveCredentials(username, password)
     }
 
     private fun LoginResponse.toDomain(): User {

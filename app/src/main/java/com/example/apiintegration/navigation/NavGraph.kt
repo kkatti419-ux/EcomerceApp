@@ -21,7 +21,16 @@ fun AppNavGraph(startDestination: String = Screen.StartScreen.route) {
     NavHost(navController = navController, startDestination = startDestination) {
 
         composable(route = Screen.StartScreen.route) {
-            StartScreen();
+            StartScreen(navController, onLoginSuccess = { username, password ->
+                try {
+                        navController.navigate(Screen.Home.createRoute(username,password))
+                }
+                catch(e: Exception){
+                        e.printStackTrace()
+
+                }
+
+            });
         }
 
 

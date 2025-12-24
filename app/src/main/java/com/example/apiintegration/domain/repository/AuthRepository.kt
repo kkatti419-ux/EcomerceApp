@@ -8,5 +8,5 @@ interface AuthRepository {
 
     fun getCountries(): List<Country>
 
-
+    suspend fun saveCredentials(username: String, password: String)
 }

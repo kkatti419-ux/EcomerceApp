@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.apiintegration.domain.model.User
 import com.example.apiintegration.domain.usecase.LoginUseCase
+import com.example.apiintegration.domain.usecase.SaveCredentialsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
+    private val saveCredentialsUseCase: SaveCredentialsUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<AuthUiState>(AuthUiState.Idle)
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
@@ -26,6 +28,15 @@ class AuthViewModel @Inject constructor(
         _profileImage.value = uri
     }
 
+    fun createAccount(username: String, password: String) {
+        if (username.isBlank() || password.isBlank()) return
+        
+        viewModelScope.launch {
+            saveCredentialsUseCase(username, password)
+            // Here you would typically also call a repository function to create the account on the server
+            // For now, we simulate success or just save locally as requested
+        }
+    }
 
     fun sendPrompt(username: String, password: String) {
         if (username.isBlank() || password.isBlank()) return

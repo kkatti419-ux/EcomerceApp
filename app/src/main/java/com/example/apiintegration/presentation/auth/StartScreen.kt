@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,17 +35,20 @@ import com.example.apiintegration.common.ui.PrimaryButton
 import com.example.apiintegration.common.ui.ProfileImagePicker
 import com.example.apiintegration.ui.theme.ApiIntegrationTheme
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.apiintegration.common.ui.CountryPhoneTextField
 import com.example.apiintegration.data.remote.dto.Country
 
 
 @Composable
-fun StartScreen(viewModel: AuthViewModel = hiltViewModel()) {
+fun StartScreen(navController: NavController,onLoginSuccess: (String,String) -> Unit,viewModel: AuthViewModel = hiltViewModel(),) {
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var country by remember { mutableStateOf("") }
+    val uiState by viewModel.uiState.collectAsState()
+
     val profileImageUri by viewModel.profileImage.collectAsState()
 
     var phone by remember { mutableStateOf("") }
@@ -145,7 +150,7 @@ fun StartScreen(viewModel: AuthViewModel = hiltViewModel()) {
             Spacer(Modifier.height(24.dp))
 
             PrimaryButton(
-                onClick = { /* submit */ },
+                onClick = { viewModel.sendPrompt(username, password) },
                 text = "Create Account"
             )
 
@@ -156,16 +161,38 @@ fun StartScreen(viewModel: AuthViewModel = hiltViewModel()) {
                 modifier = Modifier.clickable { /* navigate back */ },
                 color = MaterialTheme.colorScheme.primary
             )
+
+            when (val state = uiState) {
+                is AuthUiState.Loading -> {
+                    CircularProgressIndicator()
+                }
+
+                is AuthUiState.Error -> {
+                    Text(
+                        text = state.message,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+
+                is AuthUiState.Success -> {
+                    val user = state.user
+                    LaunchedEffect(user) {
+                        onLoginSuccess(user.username,user.email)
+                    }
+
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        CircularProgressIndicator()
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text("Login Successful! Redirecting…")
+                    }
+                }
+
+                else -> Unit
+            }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewAuth() {
-    ApiIntegrationTheme {
-        StartScreen()
-    }
-}
+
 
 

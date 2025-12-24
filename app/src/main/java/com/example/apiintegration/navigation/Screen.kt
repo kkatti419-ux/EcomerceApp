@@ -8,13 +8,12 @@ sealed class Screen(val route: String) {
         fun createRoute(data: String) = "todo/$data"
     }
 
-    object Home : Screen("home/{username}/{userId}/{email}") {
+    object Home : Screen("home/{username}/{email}") {
         fun createRoute(
             username: String,
-            userId: String,
             email: String,
         ): String {
-            return "home/$username/$userId/$email"
+            return "home/$username/$email"
         }
     }
 }
