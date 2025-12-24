@@ -25,36 +25,36 @@ fun AppNavGraph(startDestination: String = Screen.StartScreen.route) {
         }
 
 
-        composable(Screen.Auth.route) {
-            AuthScreen(
-                onForgotPassword = { value ->
-                    try {
-                        navController.navigate(Screen.Home.createRoute(value)) {
-                        }
-
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-
-                },
-//                onLoginSuccess = { username -> }
-                onLoginSuccess = { username ->
-                    // Wrap navigation in try-catch to prevent Binder transaction failures
-                    try {
-                        navController.navigate(Screen.Home.createRoute(username)) {
-                            popUpTo(Screen.Auth.route) { inclusive = true }
-                            // Avoid multiple copies
-                            launchSingleTop = true
-                            // Restore state if available
-                            restoreState = true
-                        }
-                    } catch (e: Exception) {
-                        // Log the error but don't crash
-                        e.printStackTrace()
-                    }
-                }
-            )
-        }
+//        composable(Screen.Auth.route) {
+//            AuthScreen(
+//                onForgotPassword = { value ->
+//                    try {
+//                        navController.navigate(Screen.Home.createRoute(value)) {
+//                        }
+//
+//                    } catch (e: Exception) {
+//                        e.printStackTrace()
+//                    }
+//
+//                },
+////                onLoginSuccess = { username -> }
+//                onLoginSuccess = { username ->
+//                    // Wrap navigation in try-catch to prevent Binder transaction failures
+//                    try {
+//                        navController.navigate(Screen.Home.createRoute(username)) {
+//                            popUpTo(Screen.Auth.route) { inclusive = true }
+//                            // Avoid multiple copies
+//                            launchSingleTop = true
+//                            // Restore state if available
+//                            restoreState = true
+//                        }
+//                    } catch (e: Exception) {
+//                        // Log the error but don't crash
+//                        e.printStackTrace()
+//                    }
+//                }
+//            )
+//        }
         composable(
             route = Screen.Home.route,
             arguments = listOf(navArgument("username") { type = NavType.StringType })
