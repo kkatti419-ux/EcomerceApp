@@ -10,16 +10,24 @@ import com.example.apiintegration.presentation.auth.AuthScreen
 import com.example.apiintegration.presentation.auth.SignInScreen
 import com.example.apiintegration.presentation.form.ProfileScreen
 import com.example.apiintegration.presentation.posts.PostScreen
+import com.example.apiintegration.presentation.products.ProductList
 import com.example.apiintegration.presentation.todo.Todo
 
 @Composable
-fun AppNavGraph(startDestination: String = Screen.Home.route) {
+fun AppNavGraph(startDestination: String = Screen.ProductList.route) {
     val navController = rememberNavController()
 
 
 
 
+
+
+
     NavHost(navController = navController, startDestination = startDestination) {
+
+        composable(route=Screen.ProductList.route){
+            ProductList()
+        }
 
         composable(route=Screen.ProfileScreen.route){
             ProfileScreen()

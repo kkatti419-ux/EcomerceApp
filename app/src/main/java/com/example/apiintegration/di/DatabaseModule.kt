@@ -29,4 +29,10 @@ object DatabaseModule {
     fun provideUserDao(db: AppDatabase): UserDao {
         return db.userDao
     }
+
+    @Provides
+    @Singleton
+    fun providePostDao(db: AppDatabase): com.example.apiintegration.data.local.dao.PostDao {
+        return db.postDao
+    }
 }

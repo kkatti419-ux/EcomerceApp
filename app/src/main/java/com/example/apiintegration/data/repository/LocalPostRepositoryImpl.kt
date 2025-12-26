@@ -13,7 +13,7 @@ class LocalPostRepositoryImpl @Inject constructor(
 ): LocalPostRepository {
     override suspend fun upsertPost(user: PostList) {
        val result= dao.upsertPost(user.toEntity())
-        AppLogger.d("DB_CHECKER","Insert result: $result")
+        AppLogger.d("DB_CHECKER $result","Insert result: $result")
     }
 
     private fun PostList.toEntity(): PostEntity {

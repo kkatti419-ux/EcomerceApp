@@ -47,4 +47,10 @@ abstract class RepositoryModule {
         localUserRepositoryImpl: com.example.apiintegration.data.repository.LocalUserRepositoryImpl
     ): com.example.apiintegration.domain.repository.LocalUserRepository
 
+    @Binds
+    @Singleton
+    abstract fun bindLocalPostRepository(
+        localPostRepositoryImpl: com.example.apiintegration.data.repository.LocalPostRepositoryImpl
+    ): com.example.apiintegration.domain.repository.LocalPostRepository
+
 }
