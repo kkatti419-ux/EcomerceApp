@@ -5,8 +5,11 @@ import com.example.apiintegration.domain.repository.PostRepository
 import com.example.apiintegration.data.repository.AuthRepositoryImpl
 import com.example.apiintegration.domain.repository.AuthRepository
 import com.example.apiintegration.data.repository.GeminiRepositoryImpl
+import com.example.apiintegration.data.repository.LocalPostRepositoryImpl
+import com.example.apiintegration.data.repository.LocalUserRepositoryImpl
 import com.example.apiintegration.domain.repository.GeminiRepository
-import com.example.apiintegration.presentation.auth.AuthViewModel
+import com.example.apiintegration.domain.repository.ProductRepository
+import com.example.apiintegration.data.repository.ProductRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -44,13 +47,72 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindLocalUserRepository(
-        localUserRepositoryImpl: com.example.apiintegration.data.repository.LocalUserRepositoryImpl
+        localUserRepositoryImpl: LocalUserRepositoryImpl
     ): com.example.apiintegration.domain.repository.LocalUserRepository
 
     @Binds
     @Singleton
     abstract fun bindLocalPostRepository(
-        localPostRepositoryImpl: com.example.apiintegration.data.repository.LocalPostRepositoryImpl
+        localPostRepositoryImpl: LocalPostRepositoryImpl
     ): com.example.apiintegration.domain.repository.LocalPostRepository
 
+    @Binds
+    @Singleton
+    abstract fun bindProductRepository(
+        productRepositoryImpl: ProductRepositoryImpl
+    ): ProductRepository
+
+
 }
+
+
+/*
+*
+🧠 Why this is required (simple)
+When you write this in ViewModel:
+
+kotlin
+Copy code
+@Inject
+lateinit var productRepository: ProductRepository
+*
+*
+*
+* Hilt asks:
+
+“Which class should I create for ProductRepository?”
+
+Your @Binds tells Hilt:
+
+ProductRepository → ProductRepositoryImpl
+
+
+Without it ❌ → Hilt crash
+*
+*
+*
+*
+*
+* ❌ Common mistakes (avoid)
+
+Forgetting to bind new repository
+
+Binding wrong interface
+
+Missing @Inject constructor in Impl
+
+Mixing @Provides and @Binds unnecessarily
+
+🧠 One-line memory
+
+New repository = new @Binds entry
+
+🎯 Final answer to your question
+
+What do I need to do here?
+
+✅ Add a @Binds method for ProductRepositoryImpl
+✅ Make sure Impl has @Inject constructor
+
+
+* */

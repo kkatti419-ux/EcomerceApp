@@ -19,11 +19,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.apiintegration.common.ui.PrimaryButton
 import com.example.apiintegration.common.ui.SvgImage
+import com.example.apiintegration.presentation.posts.PostViewModel
 
 @Composable
-fun ProductList() {
+fun ProductList(
+    viewModel: ProductViewModel = hiltViewModel(),
+
+) {
     val data = List(15) { "Product ${it + 1}" }
 
     LazyVerticalGrid(
@@ -38,7 +43,7 @@ fun ProductList() {
                 ),
                 modifier = Modifier
                     .padding(8.dp)
-                    .height(260.dp),
+                    .height(300.dp),
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(14.dp)
             ) {
                 Column(
@@ -103,11 +108,13 @@ fun ProductList() {
                         color = Color(0xFF1565C0)
                     )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+//                    Spacer(modifier = Modifier.height(10.dp))
 
                     // 🔹 CTA Button
                     PrimaryButton(
-                        onClick = { },
+                        onClick = {
+                            viewModel.getAllProducts()
+                        },
                         text = "Add to Cart",
                         modifier = Modifier
                             .padding(horizontal = 12.dp)
