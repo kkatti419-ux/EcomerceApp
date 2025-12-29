@@ -10,6 +10,7 @@ import com.example.apiintegration.presentation.auth.AuthScreen
 import com.example.apiintegration.presentation.auth.SignInScreen
 import com.example.apiintegration.presentation.form.ProfileScreen
 import com.example.apiintegration.presentation.posts.PostScreen
+import com.example.apiintegration.presentation.products.ProductDetailScreen
 import com.example.apiintegration.presentation.products.ProductList
 import com.example.apiintegration.presentation.todo.Todo
 
@@ -26,7 +27,15 @@ fun AppNavGraph(startDestination: String = Screen.ProductList.route) {
     NavHost(navController = navController, startDestination = startDestination) {
 
         composable(route=Screen.ProductList.route){
-            ProductList()
+            ProductList(navController)
+        }
+
+        composable(
+            route = Screen.ProductDetailScreen.route,
+            arguments = listOf(navArgument("productId") { type = NavType.LongType })
+        ) { backStackEntry ->
+            val productId = backStackEntry.arguments?.getLong("productId") ?: 0L
+            ProductDetailScreen(productId = productId, navController = navController)
         }
 
         composable(route=Screen.ProfileScreen.route){

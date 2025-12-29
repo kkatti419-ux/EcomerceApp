@@ -52,6 +52,9 @@ interface GeminiApi {
     @GET("https://dummyjson.com/products")
     suspend fun getProducts(): ProductResponse
 
+    @GET("https://dummyjson.com/products/{id}")
+    suspend fun getProductById(@retrofit2.http.Path("id") id: Long): com.example.apiintegration.domain.model.product.Product
+
 
 
 
