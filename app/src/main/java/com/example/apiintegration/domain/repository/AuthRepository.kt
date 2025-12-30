@@ -8,5 +8,17 @@ interface AuthRepository {
 
     fun getCountries(): List<Country>
 
-    suspend fun saveCredentials(username: String, password: String)
+    suspend fun saveCredentials(username: String, password: String,phone:String)
+    
+    suspend fun saveToken(accessToken: String, refreshToken: String)
+    
+    fun getSavedUsername(): String?
+
+    fun getPhone():String?
+    
+    fun getSavedPassword(): String?
+    
+    fun getAccessToken(): String?
+    
+    fun getRefreshToken(): String?
 }

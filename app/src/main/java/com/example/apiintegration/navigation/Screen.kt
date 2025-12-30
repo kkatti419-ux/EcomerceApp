@@ -4,6 +4,7 @@ package com.example.apiintegration.navigation
 sealed class Screen(val route: String) {
     object ProfileScreen : Screen("profile")
     object ProductList : Screen("product")
+    object CheckDataScreen : Screen("scr")
     object ProductDetailScreen : Screen("product_details/{productId}") {
         fun createRoute(productId: Long) = "product_details/$productId"
     }

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.apiintegration.domain.model.User
 import com.example.apiintegration.domain.usecase.LoginUseCase
 import com.example.apiintegration.domain.usecase.SaveCredentialsUseCase
+import com.example.apiintegration.domain.usecase.SaveTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
-    private val saveCredentialsUseCase: SaveCredentialsUseCase
+    private val saveCredentialsUseCase: SaveCredentialsUseCase,
+    private val saveTokenUseCase: SaveTokenUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<AuthUiState>(AuthUiState.Idle)
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
@@ -28,11 +30,11 @@ class AuthViewModel @Inject constructor(
         _profileImage.value = uri
     }
 
-    fun createAccount(username: String, password: String) {
+    fun createAccount(username: String, password: String,phone:String) {
         if (username.isBlank() || password.isBlank()) return
         
         viewModelScope.launch {
-            saveCredentialsUseCase(username, password)
+            saveCredentialsUseCase(username, password,phone)
             // Here you would typically also call a repository function to create the account on the server
             // For now, we simulate success or just save locally as requested
         }
@@ -45,8 +47,10 @@ class AuthViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val result = loginUseCase(username, password)
+                val result = loginUseCase.invoke(username, password)
                 result.onSuccess { user ->
+                    // Save token after successful login
+                    saveTokenUseCase(user.accessToken, user.refreshToken)
                     _uiState.value = AuthUiState.Success(user)
                 }.onFailure { error ->
                     _uiState.value = AuthUiState.Error(error.message ?: "Unknown error occurred")
@@ -59,6 +63,7 @@ class AuthViewModel @Inject constructor(
             }
         }
     }
+
 }
 
 sealed class AuthUiState {

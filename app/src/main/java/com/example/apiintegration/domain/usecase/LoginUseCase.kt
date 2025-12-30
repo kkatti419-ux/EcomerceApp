@@ -12,4 +12,7 @@ class LoginUseCase @Inject constructor(
     }
 
 
+//    suspend fun store(username:String, password:String){
+//        repository.saveCredentials(username, password)
+//    }
 }

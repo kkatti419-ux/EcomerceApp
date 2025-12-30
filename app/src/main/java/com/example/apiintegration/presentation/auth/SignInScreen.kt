@@ -38,8 +38,8 @@ import com.example.apiintegration.data.remote.dto.Country
 @Composable
 fun SignInScreen(navController: NavController,onLoginSuccess: (String,String) -> Unit,viewModel: AuthViewModel = hiltViewModel(),) {
 
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("emilys") }
+    var password by remember { mutableStateOf("emilyspass") }
     var country by remember { mutableStateOf("") }
     val uiState by viewModel.uiState.collectAsState()
 

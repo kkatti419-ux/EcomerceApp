@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.apiintegration.presentation.auth.AuthScreen
+import com.example.apiintegration.presentation.auth.CheckDataScreen
 import com.example.apiintegration.presentation.auth.SignInScreen
 import com.example.apiintegration.presentation.form.ProfileScreen
 import com.example.apiintegration.presentation.posts.PostScreen
@@ -15,7 +16,7 @@ import com.example.apiintegration.presentation.products.ProductList
 import com.example.apiintegration.presentation.todo.Todo
 
 @Composable
-fun AppNavGraph(startDestination: String = Screen.ProductList.route) {
+fun AppNavGraph(startDestination: String = Screen.CheckDataScreen.route) {
     val navController = rememberNavController()
 
 
@@ -29,7 +30,9 @@ fun AppNavGraph(startDestination: String = Screen.ProductList.route) {
         composable(route=Screen.ProductList.route){
             ProductList(navController)
         }
-
+        composable(route=Screen.CheckDataScreen.route){
+            CheckDataScreen()
+        }
         composable(
             route = Screen.ProductDetailScreen.route,
             arguments = listOf(navArgument("productId") { type = NavType.LongType })

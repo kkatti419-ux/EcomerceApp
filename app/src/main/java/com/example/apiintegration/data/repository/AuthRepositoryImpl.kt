@@ -33,8 +33,32 @@ class AuthRepositoryImpl @Inject constructor(
          return com.example.apiintegration.data.local.CountryDataSource.asianCountries
     }
 
-    override suspend fun saveCredentials(username: String, password: String) {
-        userPreferences.saveCredentials(username, password)
+    override suspend fun saveCredentials(username: String, password: String,phone:String) {
+        userPreferences.saveCredentials(username, password,phone)
+    }
+
+    override suspend fun saveToken(accessToken: String, refreshToken: String) {
+        userPreferences.saveToken(accessToken, refreshToken)
+    }
+
+    override fun getSavedUsername(): String? {
+        return userPreferences.getUsername()
+    }
+
+    override fun getPhone(): String? {
+        TODO("Not yet implemented")
+    }
+
+    override fun getSavedPassword(): String? {
+        return userPreferences.getPassword()
+    }
+
+    override fun getAccessToken(): String? {
+        return userPreferences.getAccessToken()
+    }
+
+    override fun getRefreshToken(): String? {
+        return userPreferences.getRefreshToken()
     }
 
     private fun LoginResponse.toDomain(): User {

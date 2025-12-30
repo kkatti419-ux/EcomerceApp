@@ -3,10 +3,11 @@ package com.example.apiintegration.domain.usecase
 import com.example.apiintegration.domain.repository.AuthRepository
 import javax.inject.Inject
 
-class SaveCredentialsUseCase @Inject constructor(
+class GetAccessTokenUseCase @Inject constructor(
     private val repository: AuthRepository
 ) {
-    suspend operator fun invoke(username: String, password: String,phone:String) {
-        repository.saveCredentials(username, password,phone)
+    operator fun invoke(): String? {
+        return repository.getAccessToken()
     }
 }
+
