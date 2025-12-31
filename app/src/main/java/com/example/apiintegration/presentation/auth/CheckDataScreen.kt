@@ -76,10 +76,10 @@ fun CheckDataScreen(
                                         ?: "${state.accessToken.take(50)}..."
                                 )
                                 HorizontalDivider()
-//                                DataRow(
-//                                    label = "Access Token",
-//                                    value = state.phone
-//                                )
+                                DataRow(
+                                    label = "Access Token",
+                                    value = state.phone
+                                )
                             }
                         }
 

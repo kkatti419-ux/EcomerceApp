@@ -30,7 +30,7 @@ class CheckDataViewModel @Inject constructor(
                 username = credentials.username ?: "Not set",
                 password = credentials.password ?: "Not set",
                 accessToken = token ?: "Not set",
-//                phone = credentials.phone ?: "Not set"
+                phone = credentials.phone ?: "Not set"
             )
         } catch (e: Exception) {
             _uiState.value = CheckDataUiState.Error(e.message ?: "Unknown error occurred")
@@ -44,7 +44,7 @@ sealed class CheckDataUiState {
         val username: String,
         val password: String,
         val accessToken: String,
-//        val phone:String
+        val phone:String
     ) : CheckDataUiState()
     data class Error(val message: String) : CheckDataUiState()
 }

@@ -10,6 +10,8 @@ import com.example.apiintegration.data.repository.LocalUserRepositoryImpl
 import com.example.apiintegration.domain.repository.GeminiRepository
 import com.example.apiintegration.domain.repository.ProductRepository
 import com.example.apiintegration.data.repository.ProductRepositoryImpl
+import com.example.apiintegration.data.repository.UserDetailsRepositoryImpl
+import com.example.apiintegration.domain.repository.UserDetailReposirotory
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -61,6 +63,12 @@ abstract class RepositoryModule {
     abstract fun bindProductRepository(
         productRepositoryImpl: ProductRepositoryImpl
     ): ProductRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindUserDetailsRepository(
+        userDetailsRepositoryImpl: UserDetailsRepositoryImpl
+    ): UserDetailReposirotory
 
 
 }

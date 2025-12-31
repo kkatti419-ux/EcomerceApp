@@ -46,7 +46,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun getPhone(): String? {
-        TODO("Not yet implemented")
+        return userPreferences.getPhoneNumber()
     }
 
     override fun getSavedPassword(): String? {

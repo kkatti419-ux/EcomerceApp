@@ -4,9 +4,11 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.apiintegration.domain.model.User
+import com.example.apiintegration.domain.model.UserData.UserDetails
 import com.example.apiintegration.domain.usecase.LoginUseCase
 import com.example.apiintegration.domain.usecase.SaveCredentialsUseCase
 import com.example.apiintegration.domain.usecase.SaveTokenUseCase
+import com.example.apiintegration.domain.usecase.local_user.UserDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +20,8 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val saveCredentialsUseCase: SaveCredentialsUseCase,
-    private val saveTokenUseCase: SaveTokenUseCase
+    private val saveTokenUseCase: SaveTokenUseCase,
+    private val userDetailsUseCase: UserDetailsUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<AuthUiState>(AuthUiState.Idle)
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
@@ -51,6 +54,14 @@ class AuthViewModel @Inject constructor(
                 result.onSuccess { user ->
                     // Save token after successful login
                     saveTokenUseCase(user.accessToken, user.refreshToken)
+                    val userd = UserDetails(
+                        id = 1,
+                        username = username,
+                        password = password,
+                        token = user.accessToken
+                    )
+
+                    userDetailsUseCase.upsertData(userd)
                     _uiState.value = AuthUiState.Success(user)
                 }.onFailure { error ->
                     _uiState.value = AuthUiState.Error(error.message ?: "Unknown error occurred")
