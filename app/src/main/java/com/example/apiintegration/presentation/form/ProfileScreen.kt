@@ -45,6 +45,8 @@ fun ProfileScreen(
 ) {
     var firstname by remember { mutableStateOf("") }
     var lastname by remember { mutableStateOf("") }
+    var place by remember { mutableStateOf("") }
+    var age by remember { mutableStateOf("") }
     
     // State to track if we are editing a user
     var selectedUserId by remember { mutableStateOf<Int?>(null) }
@@ -75,6 +77,18 @@ fun ProfileScreen(
                 label = "Lastname"
             )
 
+            AppOutlinedTextField(
+                value = place,
+                onValueChange = { place = it },
+                label = "Place"
+            )
+            AppOutlinedTextField(
+                value = age,
+                onValueChange = { age = it },
+                label = "Age"
+            )
+
+
             Spacer(modifier = Modifier.padding(12.dp))
             
             Row(
@@ -83,11 +97,12 @@ fun ProfileScreen(
                  PrimaryButton(
                     onClick = {
                         if (firstname.isNotBlank() && lastname.isNotBlank()) {
-                            viewModel.upsertUser(firstname, lastname, selectedUserId)
+                            viewModel.upsertUser(firstname, lastname, selectedUserId,place,age)
                             // clear fields
                             firstname = ""
                             lastname = ""
                             selectedUserId = null
+
                         }
                     },
                     text = if (selectedUserId == null) "Save User" else "Update User"
@@ -151,6 +166,10 @@ fun UserItem(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = "${user.firstName} ${user.lastName}",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "PLACE : ${user.place} AGE: ${user.age}",
                     style = MaterialTheme.typography.titleMedium
                 )
             }

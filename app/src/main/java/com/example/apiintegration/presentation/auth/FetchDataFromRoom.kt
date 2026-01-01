@@ -19,11 +19,6 @@ fun FetchDataFromRoom(
 
 
     when (val state = uiState) {
-        CheckDataUiState.Loading -> {
-            Column() {
-                Text(text = "Loading")
-            }
-        }
 
 
         is UserRoomUiState.Error -> {
@@ -31,6 +26,7 @@ fun FetchDataFromRoom(
                 Text(text = state.message)
             }
         }
+
         UserRoomUiState.Loading -> {
             Column() {
                 Text(text = "Loading")
@@ -41,7 +37,10 @@ fun FetchDataFromRoom(
             LazyColumn() {
 
                 items(state.users.size) { index ->
+                    Text(text = state.users[index].id.toString())
                     Text(text = state.users[index].username)
+                    Text(text = state.users[index].password)
+                    Text(text = state.users[index].token)
                 }
             }
         }

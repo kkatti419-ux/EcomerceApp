@@ -30,7 +30,10 @@ class LocalUserRepositoryImpl @Inject constructor(
         return UserEntity(
             id = id,
             firstName = firstName,
-            lastName = lastName
+            lastName = lastName,
+            place = place,
+            age = age
+
         )
     }
 
@@ -38,7 +41,9 @@ class LocalUserRepositoryImpl @Inject constructor(
         return UserProfile(
             id = id,
             firstName = firstName,
-            lastName = lastName
+            lastName = lastName,
+            place = place,
+            age = age
         )
     }
 }

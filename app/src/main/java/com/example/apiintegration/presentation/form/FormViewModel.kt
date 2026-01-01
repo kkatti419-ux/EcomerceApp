@@ -27,10 +27,11 @@ class FormViewModel @Inject constructor(
             initialValue = emptyList()
         )
 
-    fun upsertUser(firstName: String, lastName: String, id: Int? = null) {
-        if (firstName.isBlank() || lastName.isBlank()) return
+    fun upsertUser(firstName: String, lastName: String, id: Int? = null,place: String,age:String) {
+        if (firstName.isBlank() || lastName.isBlank()||place.isBlank()||age.isBlank()) return
 
-        val user = UserProfile(id = id, firstName = firstName, lastName = lastName)
+
+        val user = UserProfile(id = id, firstName = firstName, lastName = lastName,place=place,age=age)
         viewModelScope.launch {
             upsertUserUseCase(user)
         }

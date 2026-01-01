@@ -44,6 +44,9 @@ class AuthViewModel @Inject constructor(
     }
 
     fun sendPrompt(username: String, password: String) {
+
+//        Temp data for room database
+
         if (username.isBlank() || password.isBlank()) return
 
         _uiState.value = AuthUiState.Loading

@@ -22,7 +22,8 @@ object DatabaseModule {
             app,
             AppDatabase::class.java,
             "api_integration.db"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

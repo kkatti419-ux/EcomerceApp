@@ -17,7 +17,7 @@ import com.example.apiintegration.presentation.products.ProductList
 import com.example.apiintegration.presentation.todo.Todo
 
 @Composable
-fun AppNavGraph(startDestination: String = Screen.FetchDataFromRoom.route) {
+fun AppNavGraph(startDestination: String = Screen.ProfileScreen.route) {
     val navController = rememberNavController()
 
 

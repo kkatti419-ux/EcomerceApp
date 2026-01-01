@@ -16,7 +16,7 @@ import com.example.apiintegration.data.local.entity.UserDetailsEntity
         PostEntity::class , // ✅ REQUIRED
         UserDetailsEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
