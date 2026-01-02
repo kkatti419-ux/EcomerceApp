@@ -4,7 +4,10 @@ import com.example.apiintegration.data.remote.dto.Country
 import com.example.apiintegration.domain.model.User
 
 interface AuthRepository {
-    suspend fun login(username: String, password: String): Result<User>
+    suspend fun  login(username: String, password: String): Result<User>
+
+    fun isUserLoggedIn(): Boolean
+
 
     fun getCountries(): List<Country>
 

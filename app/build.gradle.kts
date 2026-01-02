@@ -103,6 +103,10 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("io.coil-kt:coil-svg:2.5.0")
+//    implementation("com.github.stfalcon-studio:pinput-compose:1.0.0")
+//    implementation("com.github.stfalcon-studio:pinput:5.0.0")
+//
+
 
 
 

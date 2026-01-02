@@ -18,6 +18,7 @@ import com.example.apiintegration.common.ui.PrimaryButton
 @Composable
 fun AuthScreen(
     viewModel: AuthViewModel = hiltViewModel(),
+
     onLoginSuccess: (String) -> Unit,
     onForgotPassword: (String) -> Unit,
 ) {

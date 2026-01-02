@@ -12,5 +12,8 @@ object PreferenceKeys {
     const val KEY_REFRESH_TOKEN = "refresh_token"
 
     const val PHONE_NUMBER = "phone_number"
+
+    const val EXPIRY_TIME = "expiry_time"
 }
+
 

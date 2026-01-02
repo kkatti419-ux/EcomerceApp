@@ -1,6 +1,7 @@
 package com.example.apiintegration.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.example.apiintegration.data.local.UserPreferences
 import dagger.Module
 import dagger.Provides
@@ -13,9 +14,18 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object LocalModule {
 
+
+
+
     @Provides
     @Singleton
-    fun provideUserPreferences(@ApplicationContext context: Context): UserPreferences {
-        return UserPreferences(context)
+    fun provideSharedPreferences(
+        @ApplicationContext context: Context
+    ): SharedPreferences {
+        return context.getSharedPreferences(
+            com.example.apiintegration.common.constants.PreferenceKeys.PREF_NAME,
+            Context.MODE_PRIVATE
+        )
     }
+
 }

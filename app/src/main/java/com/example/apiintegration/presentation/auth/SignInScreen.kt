@@ -36,14 +36,20 @@ import com.example.apiintegration.data.remote.dto.Country
 
 
 @Composable
-fun SignInScreen(navController: NavController,onLoginSuccess: (String,String) -> Unit,viewModel: AuthViewModel = hiltViewModel(),) {
+fun SignInScreen(
+    navController: NavController,
+    onLoginSuccess: (String, String) -> Unit,
+    viewModel: AuthViewModel = hiltViewModel(),
+) {
 
     var username by remember { mutableStateOf("emilys") }
     var password by remember { mutableStateOf("emilyspass") }
     var country by remember { mutableStateOf("") }
     val uiState by viewModel.uiState.collectAsState()
 
+    val countries by viewModel.countries.collectAsState()
     val profileImageUri by viewModel.profileImage.collectAsState()
+
 
     var phone by remember { mutableStateOf("") }
     var selectedCountry by remember {
@@ -52,14 +58,12 @@ fun SignInScreen(navController: NavController,onLoginSuccess: (String,String) ->
         )
     }
 
-    val countries = listOf(
-        Country("India", "IN", "+91"),
-        Country("Japan", "JP", "+81"),
-        Country("China", "CN", "+86")
-    )
 
-
-
+//    val countries = listOf(
+//        Country("India", "IN", "+91"),
+//        Country("Japan", "JP", "+81"),
+//        Country("China", "CN", "+86")
+//    )
 
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -104,7 +108,9 @@ fun SignInScreen(navController: NavController,onLoginSuccess: (String,String) ->
             ProfileImagePicker(
                 imageUri = profileImageUri,
                 onImagePicked = viewModel::onProfileImageSelected,
-                modifier = Modifier.size(90.dp).align(Alignment.Start)
+                modifier = Modifier
+                    .size(90.dp)
+                    .align(Alignment.Start)
             )
 
 
@@ -135,11 +141,7 @@ fun SignInScreen(navController: NavController,onLoginSuccess: (String,String) ->
             )
 
 
-//            AppOutlinedTextField(
-//                value = country,
-//                onValueChange = { country = it },
-//                label = "Country"
-//            )
+
 
             Spacer(Modifier.height(24.dp))
 
@@ -171,7 +173,7 @@ fun SignInScreen(navController: NavController,onLoginSuccess: (String,String) ->
                 is AuthUiState.Success -> {
                     val user = state.user
                     LaunchedEffect(user) {
-                        onLoginSuccess(user.username,user.email)
+                        onLoginSuccess(user.username, user.email)
                     }
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {

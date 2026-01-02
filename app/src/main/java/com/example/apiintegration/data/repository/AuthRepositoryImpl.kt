@@ -1,6 +1,7 @@
 package com.example.apiintegration.data.repository
 
 import com.example.apiintegration.data.local.UserPreferences
+import com.example.apiintegration.data.local.session.SessionManager
 import com.example.apiintegration.data.remote.GeminiApi
 import com.example.apiintegration.data.remote.dto.Country
 import com.example.apiintegration.data.remote.dto.LoginRequest
@@ -11,10 +12,15 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val api: GeminiApi,
-    private val userPreferences: UserPreferences
+    private val userPreferences: UserPreferences,
+    private val session: SessionManager
 ) : AuthRepository {
 
-    override suspend fun login(username: String, password: String): Result<User> {
+    override fun isUserLoggedIn(): Boolean {
+        return session.isLoggedIn()
+    }
+
+    override suspend  fun  login(username: String, password: String): Result<User> {
         return try {
             val request = LoginRequest(
                 username = username,

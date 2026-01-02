@@ -77,7 +77,7 @@ fun CheckDataScreen(
                                 )
                                 HorizontalDivider()
                                 DataRow(
-                                    label = "Access Token",
+                                    label = "Phone Number",
                                     value = state.phone
                                 )
                             }
@@ -136,4 +136,5 @@ private fun DataRow(
         )
     }
 }
+
 

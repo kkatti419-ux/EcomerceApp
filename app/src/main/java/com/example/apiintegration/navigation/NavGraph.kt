@@ -1,6 +1,9 @@
 package com.example.apiintegration.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,23 +13,26 @@ import com.example.apiintegration.presentation.auth.AuthScreen
 import com.example.apiintegration.presentation.auth.CheckDataScreen
 import com.example.apiintegration.presentation.auth.FetchDataFromRoom
 import com.example.apiintegration.presentation.auth.SignInScreen
+import com.example.apiintegration.presentation.auth.StartViewModel
 import com.example.apiintegration.presentation.form.ProfileScreen
 import com.example.apiintegration.presentation.posts.PostScreen
 import com.example.apiintegration.presentation.products.ProductDetailScreen
 import com.example.apiintegration.presentation.products.ProductList
+import com.example.apiintegration.presentation.starter.AppStartScreen
 import com.example.apiintegration.presentation.todo.Todo
 
 @Composable
-fun AppNavGraph(startDestination: String = Screen.ProfileScreen.route) {
+fun AppNavGraph(startViewModel: StartViewModel = hiltViewModel()) {
     val navController = rememberNavController()
 
+    val startDestination by startViewModel.startDestination.collectAsState()
+
+    NavHost(navController = navController, startDestination = Screen.AppStartScreen.route) {
 
 
-
-
-
-
-    NavHost(navController = navController, startDestination = startDestination) {
+        composable(route = Screen.AppStartScreen.route) {
+            AppStartScreen(navController)
+        }
 
         composable(route = Screen.FetchDataFromRoom.route) {
             FetchDataFromRoom()
@@ -52,9 +58,9 @@ fun AppNavGraph(startDestination: String = Screen.ProfileScreen.route) {
         }
 
         composable(route = Screen.StartScreen.route) {
-            SignInScreen(navController, onLoginSuccess = { username, password ->
+            SignInScreen(navController, onLoginSuccess = { username, email ->
                 try {
-                    navController.navigate(Screen.Home.createRoute(username, password))
+                    navController.navigate(Screen.Home.createRoute(username, email))
                 } catch (e: Exception) {
                     e.printStackTrace()
 
@@ -96,14 +102,17 @@ fun AppNavGraph(startDestination: String = Screen.ProfileScreen.route) {
 //        }
         composable(
             route = Screen.Home.route,
-            arguments = listOf(navArgument("username") { type = NavType.StringType })
+            arguments = listOf(
+                navArgument("username") { type = NavType.StringType },
+                navArgument("email") { type = NavType.StringType }
+            )
         ) { backStackEntry ->
             val username = backStackEntry.arguments?.getString("username") ?: "Unknown"
             // Pass username to PostScreen and provide logout handling
             PostScreen(
                 username = username,
                 onLogout = {
-                    navController.navigate(Screen.Auth.route) {
+                    navController.navigate(Screen.StartScreen.route) {
                         popUpTo(Screen.Home.route) { inclusive = true }
                     }
                 }
