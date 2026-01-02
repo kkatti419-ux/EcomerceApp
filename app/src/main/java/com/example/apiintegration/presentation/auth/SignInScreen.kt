@@ -33,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.apiintegration.common.ui.CountryPhoneTextField
 import com.example.apiintegration.data.remote.dto.Country
+import com.example.apiintegration.navigation.Screen
 
 
 @Composable
@@ -44,26 +45,16 @@ fun SignInScreen(
 
     var username by remember { mutableStateOf("emilys") }
     var password by remember { mutableStateOf("emilyspass") }
-    var country by remember { mutableStateOf("") }
     val uiState by viewModel.uiState.collectAsState()
-
     val countries by viewModel.countries.collectAsState()
     val profileImageUri by viewModel.profileImage.collectAsState()
-
-
     var phone by remember { mutableStateOf("") }
     var selectedCountry by remember {
         mutableStateOf(
             Country("India", "IN", "+91")
         )
     }
-
-
-//    val countries = listOf(
-//        Country("India", "IN", "+91"),
-//        Country("Japan", "JP", "+81"),
-//        Country("China", "CN", "+86")
-//    )
+    val isLoading = uiState is AuthUiState.Loading
 
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -113,8 +104,6 @@ fun SignInScreen(
                     .align(Alignment.Start)
             )
 
-
-
             Spacer(Modifier.height(24.dp))
 
             AppOutlinedTextField(
@@ -139,15 +128,13 @@ fun SignInScreen(
                 onCountrySelected = { selectedCountry = it },
                 countries = countries
             )
-
-
-
-
             Spacer(Modifier.height(24.dp))
 
             PrimaryButton(
                 onClick = { viewModel.sendPrompt(username, password) },
-                text = "Create Account"
+                text =
+                    if (isLoading) "Loading...." else "Create Account",
+                enabled = !isLoading
             )
 
             Spacer(Modifier.height(12.dp))
@@ -158,11 +145,8 @@ fun SignInScreen(
                 color = MaterialTheme.colorScheme.primary
             )
 
-            when (val state = uiState) {
-                is AuthUiState.Loading -> {
-                    CircularProgressIndicator()
-                }
 
+            when (val state = uiState) {
                 is AuthUiState.Error -> {
                     Text(
                         text = state.message,
@@ -173,16 +157,9 @@ fun SignInScreen(
                 is AuthUiState.Success -> {
                     val user = state.user
                     LaunchedEffect(user) {
-                        onLoginSuccess(user.username, user.email)
-                    }
-
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        CircularProgressIndicator()
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Text("Login Successful! Redirecting…")
+                        navController.navigate(Screen.OtpInputField.route)
                     }
                 }
-
                 else -> Unit
             }
         }

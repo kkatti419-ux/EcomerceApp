@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.animation.core.lint)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.foundation)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -106,6 +107,10 @@ dependencies {
 //    implementation("com.github.stfalcon-studio:pinput-compose:1.0.0")
 //    implementation("com.github.stfalcon-studio:pinput:5.0.0")
 //
+
+//    Intro Screen with Pager + Dots (REUSABLE
+    implementation("androidx.compose.foundation:foundation:1.5.4")
+
 
 
 

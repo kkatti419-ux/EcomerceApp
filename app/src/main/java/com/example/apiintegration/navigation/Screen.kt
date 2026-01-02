@@ -3,9 +3,11 @@ package com.example.apiintegration.navigation
 
 sealed class Screen(val route: String) {
     object AppStartScreen : Screen("app_start_screen")
+    object IntroScreen : Screen("intro_screen")
     object ProfileScreen : Screen("profile")
     object ProductList : Screen("product")
     object CheckDataScreen : Screen("scr")
+    object OtpInputField : Screen("OTP")
 
     object FetchDataFromRoom:Screen("room")
     object ProductDetailScreen : Screen("product_details/{productId}") {

@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -21,7 +22,6 @@ fun ProfileImagePicker(
     onImagePicked: (Uri) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // ✅ launcher MUST be defined here
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
@@ -34,10 +34,12 @@ fun ProfileImagePicker(
         else
             rememberAsyncImagePainter(imageUri),
         contentDescription = "Profile Image",
+        contentScale = ContentScale.Crop, // 🔑 FIX
         modifier = modifier
+            .size(90.dp)                 // 🔑 ensure square
             .clip(CircleShape)
             .clickable {
-                launcher.launch("image/*") // ✅ now resolved
+                launcher.launch("image/*")
             }
     )
 }

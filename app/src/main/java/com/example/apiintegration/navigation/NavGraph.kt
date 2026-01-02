@@ -9,9 +9,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.apiintegration.presentation.auth.AuthScreen
+import com.example.apiintegration.data.local.IntroductionPagesLists.introPages
 import com.example.apiintegration.presentation.auth.CheckDataScreen
 import com.example.apiintegration.presentation.auth.FetchDataFromRoom
+import com.example.apiintegration.presentation.auth.IntroScreen
+import com.example.apiintegration.presentation.auth.OtpScreen
 import com.example.apiintegration.presentation.auth.SignInScreen
 import com.example.apiintegration.presentation.auth.StartViewModel
 import com.example.apiintegration.presentation.form.ProfileScreen
@@ -34,9 +36,30 @@ fun AppNavGraph(startViewModel: StartViewModel = hiltViewModel()) {
             AppStartScreen(navController)
         }
 
+        composable(route = Screen.IntroScreen.route){
+            IntroScreen(
+                pages = introPages,
+                onFinish = {
+                    navController.navigate(Screen.ProductList.route) {
+                        popUpTo(Screen.IntroScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+
+        }
+
+
         composable(route = Screen.FetchDataFromRoom.route) {
             FetchDataFromRoom()
         }
+
+        composable(route = Screen.OtpInputField.route) {
+            OtpScreen(navController=navController)
+
+        }
+
 
 
         composable(route = Screen.ProductList.route) {
@@ -68,38 +91,6 @@ fun AppNavGraph(startViewModel: StartViewModel = hiltViewModel()) {
 
             });
         }
-
-
-//        composable(Screen.Auth.route) {
-//            AuthScreen(
-//                onForgotPassword = { value ->
-//                    try {
-//                        navController.navigate(Screen.Home.createRoute(value)) {
-//                        }
-//
-//                    } catch (e: Exception) {
-//                        e.printStackTrace()
-//                    }
-//
-//                },
-////                onLoginSuccess = { username -> }
-//                onLoginSuccess = { username ->
-//                    // Wrap navigation in try-catch to prevent Binder transaction failures
-//                    try {
-//                        navController.navigate(Screen.Home.createRoute(username)) {
-//                            popUpTo(Screen.Auth.route) { inclusive = true }
-//                            // Avoid multiple copies
-//                            launchSingleTop = true
-//                            // Restore state if available
-//                            restoreState = true
-//                        }
-//                    } catch (e: Exception) {
-//                        // Log the error but don't crash
-//                        e.printStackTrace()
-//                    }
-//                }
-//            )
-//        }
         composable(
             route = Screen.Home.route,
             arguments = listOf(
