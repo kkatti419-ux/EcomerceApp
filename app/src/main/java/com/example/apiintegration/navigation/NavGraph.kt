@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.apiintegration.data.local.IntroductionPagesLists.introPages
+import com.example.apiintegration.presentation.MainScreen.MainScreen
 import com.example.apiintegration.presentation.auth.CheckDataScreen
 import com.example.apiintegration.presentation.auth.FetchDataFromRoom
 import com.example.apiintegration.presentation.auth.IntroScreen
@@ -40,7 +41,7 @@ fun AppNavGraph(startViewModel: StartViewModel = hiltViewModel()) {
             IntroScreen(
                 pages = introPages,
                 onFinish = {
-                    navController.navigate(Screen.ProductList.route) {
+                    navController.navigate(Screen.MainScreen.route) {
                         popUpTo(Screen.IntroScreen.route) {
                             inclusive = true
                         }
@@ -50,10 +51,17 @@ fun AppNavGraph(startViewModel: StartViewModel = hiltViewModel()) {
 
         }
 
+        composable(route=Screen.MainScreen.route){
+            MainScreen(navController)
+        }
+
 
         composable(route = Screen.FetchDataFromRoom.route) {
             FetchDataFromRoom()
         }
+//        composable(route = Screen.FetchDataFromRoom.route) {
+//            MainScreen(navController)
+//        }
 
         composable(route = Screen.OtpInputField.route) {
             OtpScreen(navController=navController)

@@ -4,6 +4,7 @@ package com.example.apiintegration.navigation
 sealed class Screen(val route: String) {
     object AppStartScreen : Screen("app_start_screen")
     object IntroScreen : Screen("intro_screen")
+    object MainScreen : Screen("main_screen")
     object ProfileScreen : Screen("profile")
     object ProductList : Screen("product")
     object CheckDataScreen : Screen("scr")

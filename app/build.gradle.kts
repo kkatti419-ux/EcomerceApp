@@ -112,7 +112,9 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:1.5.4")
 
 
-
+    //For Media PLaying
+    implementation("androidx.media3:media3-exoplayer:1.2.1")
+    implementation("androidx.media3:media3-ui:1.2.1")
 
 
 //| Feature             | Jetpack Compose  | Coil  |
