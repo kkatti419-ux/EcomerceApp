@@ -91,13 +91,13 @@ fun AppNavGraph(startViewModel: StartViewModel = hiltViewModel()) {
         composable(route = Screen.StartScreen.route) {
             SignInScreen(navController, onLoginSuccess = { username, email ->
                 try {
-                    navController.navigate(Screen.Home.createRoute(username, email))
+                    navController.navigate(Screen.MainScreen.route) {
+                        popUpTo(Screen.StartScreen.route) { inclusive = true }
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
-
                 }
-
-            });
+            })
         }
         composable(
             route = Screen.Home.route,
