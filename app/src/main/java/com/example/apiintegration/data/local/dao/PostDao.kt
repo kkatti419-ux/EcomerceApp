@@ -12,8 +12,4 @@ interface PostDao {
 
     @Upsert
     suspend fun upsertPost(posts: PostEntity)
-
-//
-//    @Query("SELECT * FROM users")
-//    fun getAllPosts(): Flow<List<PostEntity>>
 }

@@ -3,6 +3,7 @@ package com.example.apiintegration.di
 import com.example.apiintegration.data.repository.PostRepositoryImpl
 import com.example.apiintegration.domain.repository.PostRepository
 import com.example.apiintegration.data.repository.AuthRepositoryImpl
+import com.example.apiintegration.data.repository.CartRepositoryImpl
 import com.example.apiintegration.domain.repository.AuthRepository
 import com.example.apiintegration.data.repository.GeminiRepositoryImpl
 import com.example.apiintegration.data.repository.LocalPostRepositoryImpl
@@ -11,6 +12,7 @@ import com.example.apiintegration.domain.repository.GeminiRepository
 import com.example.apiintegration.domain.repository.ProductRepository
 import com.example.apiintegration.data.repository.ProductRepositoryImpl
 import com.example.apiintegration.data.repository.UserDetailsRepositoryImpl
+import com.example.apiintegration.domain.repository.Cartrepository
 import com.example.apiintegration.domain.repository.UserDetailReposirotory
 import dagger.Binds
 import dagger.Module
@@ -69,6 +71,12 @@ abstract class RepositoryModule {
     abstract fun bindUserDetailsRepository(
         userDetailsRepositoryImpl: UserDetailsRepositoryImpl
     ): UserDetailReposirotory
+
+    @Binds
+    @Singleton
+    abstract fun bindCartRepository(
+        cartRepositoryImpl: CartRepositoryImpl
+    ): Cartrepository
 
 
 }

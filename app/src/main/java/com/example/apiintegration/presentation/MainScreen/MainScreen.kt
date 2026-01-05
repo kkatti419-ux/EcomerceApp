@@ -1,5 +1,6 @@
 package com.example.apiintegration.presentation.MainScreen
 
+import CartScreen
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -8,6 +9,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -18,16 +20,22 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.apiintegration.domain.model.Cart.Cart
 import com.example.apiintegration.navigation.BottomTab
 import com.example.apiintegration.presentation.Home.ColorScreen
 import com.example.apiintegration.presentation.Home.HomeTab
+import com.example.apiintegration.presentation.cart.CartViewModel
 import com.example.apiintegration.presentation.form.ProfileScreen
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun MainScreen(rootNavController: NavController) {
     val bottomNavController = rememberNavController()
     val navBackStackEntry by bottomNavController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+
+
+
 
     Scaffold(
         bottomBar = {
@@ -75,7 +83,7 @@ fun MainScreen(rootNavController: NavController) {
                 ColorScreen(Color(0xFFE3F2FD), "Orders")
             }
             composable(BottomTab.Cart.route) {
-                ColorScreen(Color(0xFFE8F5E9), "Cart")
+                CartScreen(navController = rootNavController)
             }
             composable(BottomTab.Profile.route) {
                 ProfileScreen()

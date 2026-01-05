@@ -6,6 +6,7 @@ import com.example.apiintegration.data.remote.dto.LoginResponse
 import com.example.apiintegration.data.remote.dto.GeminiRequest
 import com.example.apiintegration.data.remote.dto.GeminiResponse
 import com.example.apiintegration.data.remote.dto.PostsWrapper
+import com.example.apiintegration.domain.model.Cart.CartResponse
 import com.example.apiintegration.domain.model.product.ProductResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -23,7 +24,7 @@ interface GeminiApi {
     @POST("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent")
     suspend fun generateContent(
         @Header("x-goog-api-key") apiKey: String,
-        @Body request: GeminiRequest
+        @Body request: GeminiRequest,
     ): GeminiResponse
 
 //    @GET("https://dummyjson.com/posts?=")
@@ -38,7 +39,7 @@ interface GeminiApi {
     @POST("https://dummyjson.com/auth/login")
     suspend fun authentication(
         @Header("Content-Type") contentType: String = "application/json",
-        @Body request: LoginRequest
+        @Body request: LoginRequest,
     ): LoginResponse
 
 
@@ -56,9 +57,7 @@ interface GeminiApi {
     suspend fun getProductById(@retrofit2.http.Path("id") id: Long): com.example.apiintegration.domain.model.product.Product
 
 
-
-
-
-
+    @GET(value = "https://dummyjson.com/carts")
+    suspend fun getCarts(): CartResponse
 
 }
