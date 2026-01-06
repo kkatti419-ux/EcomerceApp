@@ -13,7 +13,7 @@ import com.example.apiintegration.data.local.IntroductionPagesLists.introPages
 import com.example.apiintegration.presentation.MainScreen.MainScreen
 import com.example.apiintegration.presentation.auth.CheckDataScreen
 import com.example.apiintegration.presentation.auth.FetchDataFromRoom
-import com.example.apiintegration.presentation.auth.IntroScreen
+import com.example.apiintegration.presentation.Intro.IntroScreen
 import com.example.apiintegration.presentation.auth.OtpScreen
 import com.example.apiintegration.presentation.auth.SignInScreen
 import com.example.apiintegration.presentation.auth.StartViewModel

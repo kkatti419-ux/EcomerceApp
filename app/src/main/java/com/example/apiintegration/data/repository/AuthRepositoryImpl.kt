@@ -2,7 +2,7 @@ package com.example.apiintegration.data.repository
 
 import com.example.apiintegration.data.local.UserPreferences
 import com.example.apiintegration.data.local.session.SessionManager
-import com.example.apiintegration.data.remote.GeminiApi
+import com.example.apiintegration.data.remote.api.AuthApi
 import com.example.apiintegration.data.remote.dto.Country
 import com.example.apiintegration.data.remote.dto.LoginRequest
 import com.example.apiintegration.data.remote.dto.LoginResponse
@@ -11,7 +11,8 @@ import com.example.apiintegration.domain.repository.AuthRepository
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val api: GeminiApi,
+//    private val api: GeminiApi,
+    private val authAPI: AuthApi,
     private val userPreferences: UserPreferences,
     private val session: SessionManager
 ) : AuthRepository {
@@ -27,7 +28,7 @@ class AuthRepositoryImpl @Inject constructor(
                 password = password,
                 expiresInMins = 30 // Default value
             )
-            val response = api.authentication("application/json", request)
+            val response = authAPI.authentication("application/json", request)
 
             Result.success(response.toDomain())
         } catch (e: Exception) {

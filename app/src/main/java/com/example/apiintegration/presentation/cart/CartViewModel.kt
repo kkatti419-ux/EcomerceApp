@@ -41,41 +41,6 @@ class CartViewModel @Inject constructor(
     }
 }
 
-//
-//@HiltViewModel
-//class CartViewModel @Inject constructor(private val useCase: GetCartUseCase) : ViewModel() {
-//    private val _uiState = MutableStateFlow<CartsUiState>(CartsUiState.Idle)
-//
-//    val uiState: StateFlow<CartsUiState> = _uiState.asStateFlow()
-//
-//    fun getCarts() {
-//        _uiState.value = CartsUiState.Loading
-//        viewModelScope.launch {
-//            try {
-//                val result = useCase.invoke()
-//                result.onSuccess { carts ->
-//                    _uiState.value = CartsUiState.Success(carts.carts)
-//                }
-//                    .onFailure { error ->
-//                        _uiState.value =
-//                            CartsUiState.Error(error.message ?: "Unknown error occurred")
-//                    }
-//
-//            } catch (e: Exception) {
-//
-//
-//            }
-//        }
-//
-//    }
-//}
-
-//sealed class CartsUiState {
-//    object Idle : CartsUiState()
-//    object Loading : CartsUiState()
-//    data class Success(val data: List<Cart>) : CartsUiState()
-//    data class Error(val message: String) : CartsUiState()
-//}
 
 sealed class CartsUiState {
     object Idle : CartsUiState()

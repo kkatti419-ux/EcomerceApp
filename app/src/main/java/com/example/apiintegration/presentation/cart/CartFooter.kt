@@ -10,28 +10,42 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.example.apiintegration.domain.model.Cart.Cart
+import com.example.apiintegration.ui.theme.BluePrimary
 
 @Composable
 fun CartFooter(cart: Cart) {
     val savings = cart.total - cart.discountedTotal
 
-    Column {
-        Divider()
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Divider(color = Color.LightGray, thickness = 1.dp)
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("Total")
-            Text("₹${cart.total}")
+            Text(
+                text = "Total",
+                color = Color.Gray
+            )
+            Text(
+                text = "₹${cart.total}",
+                fontWeight = FontWeight.Medium
+            )
         }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("Discounted")
+            Text(
+                text = "Discounted Price",
+                color = Color.Gray
+            )
             Text(
                 text = "₹${cart.discountedTotal}",
                 fontWeight = FontWeight.Bold
@@ -40,8 +54,8 @@ fun CartFooter(cart: Cart) {
 
         if (savings > 0) {
             Text(
-                text = "You saved ₹$savings 🎉",
-                color = Color.Green,
+                text = "🎉 You saved ₹$savings",
+                color = BluePrimary,
                 fontWeight = FontWeight.SemiBold
             )
         }

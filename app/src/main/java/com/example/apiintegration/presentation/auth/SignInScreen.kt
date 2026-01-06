@@ -107,17 +107,13 @@ fun SignInScreen(
             Spacer(Modifier.height(24.dp))
 
             AppOutlinedTextField(
-                value = username,
-                onValueChange = { username = it },
-                label = "Username"
+                value = username, onValueChange = { username = it }, label = "Username"
             )
 
             Spacer(Modifier.height(12.dp))
 
             AppOutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
-                label = "Password"
+                value = password, onValueChange = { password = it }, label = "Password"
             )
 
             Spacer(Modifier.height(12.dp))
@@ -132,8 +128,7 @@ fun SignInScreen(
 
             PrimaryButton(
                 onClick = { viewModel.sendPrompt(username, password) },
-                text =
-                    if (isLoading) "Loading...." else "Create Account",
+                text = if (isLoading) "Loading...." else "Create Account",
                 enabled = !isLoading
             )
 
@@ -149,8 +144,7 @@ fun SignInScreen(
             when (val state = uiState) {
                 is AuthUiState.Error -> {
                     Text(
-                        text = state.message,
-                        color = MaterialTheme.colorScheme.error
+                        text = state.message, color = MaterialTheme.colorScheme.error
                     )
                 }
 
@@ -160,6 +154,7 @@ fun SignInScreen(
                         navController.navigate(Screen.OtpInputField.route)
                     }
                 }
+
                 else -> Unit
             }
         }

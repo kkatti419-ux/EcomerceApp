@@ -1,18 +1,18 @@
 package com.example.apiintegration.data.repository
 
-import com.example.apiintegration.data.remote.GeminiApi
+import com.example.apiintegration.data.remote.api.PostApi
 import com.example.apiintegration.data.remote.dto.PostResponse
 import com.example.apiintegration.domain.model.Post
 import com.example.apiintegration.domain.repository.PostRepository
 import javax.inject.Inject
 
 class PostRepositoryImpl @Inject constructor(
-    private val api: GeminiApi
+    private val postApi: PostApi
 ) : PostRepository {
 
     override suspend fun getPosts(): Result<List<Post>> {
         return try {
-            val wrapper = api.getPostsWrapper()
+            val wrapper = postApi.getPostsWrapper()
             Result.success(wrapper.posts.map { it.toDomain() })
         } catch (e: Exception) {
             Result.failure(e)
@@ -21,7 +21,7 @@ class PostRepositoryImpl @Inject constructor(
 
     override suspend fun getPost(id: Int): Result<Post> {
         return try {
-            val post = api.getPostById(id)
+            val post = postApi.getPostById(id)
             Result.success(post.toDomain())
         } catch (e: Exception) {
             Result.failure(e)

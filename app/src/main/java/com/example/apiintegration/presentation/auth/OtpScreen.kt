@@ -34,9 +34,9 @@ fun OtpScreen(
     phoneNumber: String = "+91 98765 43210",
     onOtpVerified: (String) -> Unit = {},
     onResendOtp: () -> Unit = {},
-    navController: NavController
+    navController: NavController,
 
-) {
+    ) {
 
     val correctOtp = "1234"
     val maxAttempts = 3
@@ -69,35 +69,28 @@ fun OtpScreen(
         Spacer(modifier = Modifier.height(80.dp))
 
         Text(
-            text = "OTP Verification",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
+            text = "OTP Verification", fontSize = 24.sp, fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "Enter the 4 digit code sent to",
-            color = Color.Gray,
-            fontSize = 14.sp
+            text = "Enter the 4 digit code sent to", color = Color.Gray, fontSize = 14.sp
         )
 
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = phoneNumber,
-            fontWeight = FontWeight.SemiBold
+            text = phoneNumber, fontWeight = FontWeight.SemiBold
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
         // 🔢 OTP INPUT
         OtpInputField(
-            otpLength = 4,
-            onOtpComplete = { enteredOtp ->
+            otpLength = 4, onOtpComplete = { enteredOtp ->
                 otp = enteredOtp
-            }
-        )
+            })
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -116,8 +109,7 @@ fun OtpScreen(
                     timeLeft = 60
                     isResendEnabled = false
                     onResendOtp()
-                }
-            )
+                })
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -149,11 +141,9 @@ fun OtpScreen(
 
     // 🚨 Max attempts dialog (OUTSIDE Column)
     AppDialogueBox(
-        show = showDialog,
-        onDismiss = {
+        show = showDialog, onDismiss = {
             showDialog = false
             attemptCount = 0   // optional reset
             otp = ""
-        }
-    )
+        })
 }

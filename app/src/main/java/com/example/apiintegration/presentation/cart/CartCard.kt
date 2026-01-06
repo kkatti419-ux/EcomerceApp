@@ -1,5 +1,6 @@
 package com.example.apiintegration.presentation.cart
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,14 +12,15 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.apiintegration.domain.model.Cart.Cart
 
 @Composable
 fun CartCard(cart: Cart,navController: NavController) {
-    val card = Card(
-        modifier = Modifier.fillMaxWidth(),
+    Card(
+        modifier = Modifier.fillMaxWidth().background(color = Color.White),
         elevation = CardDefaults.cardElevation(6.dp),
         shape = RoundedCornerShape(12.dp)
     ) {

@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserRoomDetailsViewModel @Inject constructor(
-    private val userDetailsUseCase: UserDetailsUseCase
+    private val userDetailsUseCase: UserDetailsUseCase,
 ) : ViewModel() {
 
     private val _uiState =
@@ -23,6 +23,7 @@ class UserRoomDetailsViewModel @Inject constructor(
     init {
         getAllUsers()
     }
+
     private fun getAllUsers() {
         viewModelScope.launch {
             try {
@@ -35,18 +36,6 @@ class UserRoomDetailsViewModel @Inject constructor(
             }
         }
     }
-//
-//    fun deleteUser(userId: Int) {
-//        viewModelScope.launch {
-//            userDetailsUseCase.deleteUser(userId)
-//        }
-//    }
-//
-//    fun getUserById(userId: Int, onResult: (UserData?) -> Unit) {
-//        viewModelScope.launch {
-//            onResult(userDetailsUseCase.getUserById(userId))
-//        }
-//    }
 }
 
 
@@ -55,10 +44,10 @@ sealed class UserRoomUiState {
     object Loading : UserRoomUiState()
 
     data class Success(
-        val users: List<UserDetails>
+        val users: List<UserDetails>,
     ) : UserRoomUiState()
 
     data class Error(
-        val message: String
+        val message: String,
     ) : UserRoomUiState()
 }

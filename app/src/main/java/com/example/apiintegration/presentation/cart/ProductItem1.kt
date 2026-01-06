@@ -1,5 +1,6 @@
 package com.example.apiintegration.presentation.cart
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,29 +24,38 @@ import com.example.apiintegration.domain.model.Cart.Product
 
 
 @Composable
-fun ProductItem1(product: Product,navController: NavController) {
+fun ProductItem1(
+    product: Product,
+    navController: NavController
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .clip(RoundedCornerShape(12.dp))
+            .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
         AsyncImage(
             model = product.thumbnail,
-            contentDescription = null,
+            contentDescription = product.title,
             modifier = Modifier
-                .size(60.dp)
-                .clip(RoundedCornerShape(8.dp))
+                .size(64.dp)
+                .clip(RoundedCornerShape(10.dp))
         )
 
         Spacer(modifier = Modifier.width(12.dp))
 
-        Column(modifier = Modifier.weight(1f)) {
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+
             Text(
                 text = product.title,
                 fontWeight = FontWeight.SemiBold,
-                maxLines = 1
+                maxLines = 1,
+                fontSize = 15.sp
             )
 
             Text(
@@ -56,14 +66,11 @@ fun ProductItem1(product: Product,navController: NavController) {
 
             Text(
                 text = "₹${product.discountedTotal}",
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
             )
         }
 
-        Text(
-            text = "-${product.discountPercentage}%",
-            color = Color.Green,
-            fontWeight = FontWeight.Bold
-        )
+        DiscountBadge(product.discountPercentage)
     }
 }

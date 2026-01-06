@@ -1,6 +1,6 @@
 package com.example.apiintegration.presentation.MainScreen
 
-import CartScreen
+import com.example.apiintegration.presentation.cart.CartScreen
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -33,10 +33,6 @@ fun MainScreen(rootNavController: NavController) {
     val bottomNavController = rememberNavController()
     val navBackStackEntry by bottomNavController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-
-
-
-
     Scaffold(
         bottomBar = {
             NavigationBar {
@@ -47,26 +43,20 @@ fun MainScreen(rootNavController: NavController) {
                     BottomTab.Cart,
                     BottomTab.Profile
                 ).forEach { tab ->
-                    NavigationBarItem(
-                        selected = currentRoute == tab.route,
-                        onClick = {
-                            bottomNavController.navigate(tab.route) {
-                                popUpTo(bottomNavController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
+                    NavigationBarItem(selected = currentRoute == tab.route, onClick = {
+                        bottomNavController.navigate(tab.route) {
+                            popUpTo(bottomNavController.graph.findStartDestination().id) {
+                                saveState = true
                             }
-                        },
-                        icon = {
-                            Icon(tab.icon, contentDescription = tab.label)
-                        },
-                        label = { Text(tab.label) }
-                    )
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }, icon = {
+                        Icon(tab.icon, contentDescription = tab.label)
+                    }, label = { Text(tab.label) })
                 }
             }
-        }
-    ) { padding ->
+        }) { padding ->
         NavHost(
             navController = bottomNavController,
             startDestination = BottomTab.Home.route,

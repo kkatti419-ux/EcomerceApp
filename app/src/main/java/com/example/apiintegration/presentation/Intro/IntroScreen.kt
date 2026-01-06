@@ -1,4 +1,4 @@
-package com.example.apiintegration.presentation.auth
+package com.example.apiintegration.presentation.Intro
 
 import IntroCard
 import androidx.compose.foundation.ExperimentalFoundationApi
