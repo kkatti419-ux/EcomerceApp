@@ -1,13 +1,13 @@
-package com.example.apiintegration.domain.usecase
+package com.example.apiintegration.domain.usecase.post
 
 import com.example.apiintegration.domain.model.Post
 import com.example.apiintegration.domain.repository.PostRepository
 import javax.inject.Inject
 
-class GetPostsUseCase @Inject constructor(
+class GetPostUseCase @Inject constructor(
     private val repository: PostRepository
 ) {
-    suspend operator fun invoke(): Result<List<Post>> {
-        return repository.getPosts()
+    suspend operator fun invoke(id: Int): Result<Post> {
+        return repository.getPost(id)
     }
 }

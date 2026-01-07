@@ -1,6 +1,7 @@
 package com.example.apiintegration.data.repository
 
 import com.example.apiintegration.data.local.UserPreferences
+import com.example.apiintegration.data.local.datasource.CountryDataSource
 import com.example.apiintegration.data.local.session.SessionManager
 import com.example.apiintegration.data.remote.api.AuthApi
 import com.example.apiintegration.data.remote.dto.Country
@@ -37,7 +38,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun getCountries(): List<Country> {
-         return com.example.apiintegration.data.local.CountryDataSource.asianCountries
+         return CountryDataSource.asianCountries
     }
 
     override suspend fun saveCredentials(username: String, password: String,phone:String) {

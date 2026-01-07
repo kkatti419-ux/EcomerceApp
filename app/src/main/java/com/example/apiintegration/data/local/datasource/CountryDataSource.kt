@@ -1,4 +1,4 @@
-package com.example.apiintegration.data.local
+package com.example.apiintegration.data.local.datasource
 
 import com.example.apiintegration.data.remote.dto.Country
 

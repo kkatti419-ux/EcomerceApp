@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.apiintegration.domain.model.Post
 import com.example.apiintegration.domain.model.PostList
 import com.example.apiintegration.domain.model.UserProfile
-import com.example.apiintegration.domain.usecase.GetPostUseCase
-import com.example.apiintegration.domain.usecase.GetPostsUseCase
+import com.example.apiintegration.domain.usecase.post.GetPostUseCase
+import com.example.apiintegration.domain.usecase.post.GetPostsUseCase
 import com.example.apiintegration.domain.usecase.local_post.UpsertPostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

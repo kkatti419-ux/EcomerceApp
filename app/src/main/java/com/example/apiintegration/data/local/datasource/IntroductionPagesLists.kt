@@ -1,8 +1,7 @@
-package com.example.apiintegration.data.local
+package com.example.apiintegration.data.local.datasource
 
-import com.example.apiintegration.domain.model.Intro.IntroPage
 import com.example.apiintegration.R
-
+import com.example.apiintegration.domain.model.Intro.IntroPage
 
 object IntroductionPagesLists {
     val introPages = listOf(

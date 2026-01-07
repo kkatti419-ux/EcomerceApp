@@ -13,7 +13,7 @@ import com.example.apiintegration.data.local.entity.UserDetailsEntity
 @Database(
     entities = [
         UserEntity::class,
-        PostEntity::class , // ✅ REQUIRED
+        PostEntity::class, // ✅ REQUIRED
         UserDetailsEntity::class
     ],
     version = 3,

@@ -10,18 +10,14 @@ android {
     namespace = "com.example.apiintegration"
     compileSdk = 36
 
-//    compileSdk {
-//        version = release(36)
-//    }
-
     defaultConfig {
         applicationId = "com.example.apiintegration"
-        minSdk = 23
+        minSdk = 24      // ✅ FIXED
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
 
     buildTypes {
         release {
@@ -68,9 +64,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     // Jetpack Compose
-    implementation("androidx.compose.ui:ui:1.5.0")
-    implementation("androidx.compose.material:material:1.5.0")
-    implementation("androidx.activity:activity-compose:1.8.0")
+//    implementation("androidx.compose.ui:ui:1.5.0")
+//    implementation("androidx.compose.material:material:1.5.0")
+//    implementation("androidx.activity:activity-compose:1.8.0")
 
     // Retrofit + OkHttp
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
