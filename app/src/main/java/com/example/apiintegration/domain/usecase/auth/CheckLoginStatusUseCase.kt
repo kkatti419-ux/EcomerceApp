@@ -1,4 +1,4 @@
-package com.example.apiintegration.domain.usecase
+package com.example.apiintegration.domain.usecase.auth
 
 import com.example.apiintegration.domain.repository.AuthRepository
 import javax.inject.Inject

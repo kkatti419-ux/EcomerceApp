@@ -1,7 +1,7 @@
 package com.example.apiintegration.presentation.auth
 
 import androidx.lifecycle.ViewModel
-import com.example.apiintegration.domain.usecase.CheckLoginStatusUseCase
+import com.example.apiintegration.domain.usecase.auth.CheckLoginStatusUseCase
 import com.example.apiintegration.domain.usecase.GetSavedCredentialsUseCase
 import com.example.apiintegration.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel

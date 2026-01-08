@@ -7,7 +7,7 @@ import com.example.apiintegration.data.repository.CartRepositoryImpl
 import com.example.apiintegration.domain.repository.AuthRepository
 import com.example.apiintegration.data.repository.GeminiRepositoryImpl
 import com.example.apiintegration.data.repository.LocalPostRepositoryImpl
-import com.example.apiintegration.data.repository.LocalUserRepositoryImpl
+import com.example.apiintegration.data.repository.ProfileLocalRepositoryImpl
 import com.example.apiintegration.domain.repository.GeminiRepository
 import com.example.apiintegration.domain.repository.ProductRepository
 import com.example.apiintegration.data.repository.ProductRepositoryImpl
@@ -51,8 +51,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindLocalUserRepository(
-        localUserRepositoryImpl: LocalUserRepositoryImpl
-    ): com.example.apiintegration.domain.repository.LocalUserRepository
+        localUserRepositoryImpl: ProfileLocalRepositoryImpl
+    ): com.example.apiintegration.domain.repository.ProfileLocalRepository
 
     @Binds
     @Singleton

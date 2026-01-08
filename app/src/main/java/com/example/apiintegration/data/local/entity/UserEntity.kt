@@ -9,6 +9,6 @@ data class UserEntity(
     val id: Int? = null,
     val firstName: String,
     val lastName: String,
-    val place:String,
-    val age:String
+    val place: String,
+    val age: String,
 )

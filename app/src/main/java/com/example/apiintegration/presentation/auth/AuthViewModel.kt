@@ -9,9 +9,9 @@ import com.example.apiintegration.data.remote.dto.Country
 import com.example.apiintegration.domain.model.User
 import com.example.apiintegration.domain.model.UserData.UserDetails
 import com.example.apiintegration.domain.usecase.GetCountriesUseCase
-import com.example.apiintegration.domain.usecase.LoginUseCase
-import com.example.apiintegration.domain.usecase.SaveCredentialsUseCase
-import com.example.apiintegration.domain.usecase.SaveTokenUseCase
+import com.example.apiintegration.domain.usecase.auth.AuthenticateUserUseCase
+import com.example.apiintegration.domain.usecase.local_storage.StoreUserCredentialsLocallyUseCase
+import com.example.apiintegration.domain.usecase.local_storage.StoreAuthTokensLocallyUseCase
 import com.example.apiintegration.domain.usecase.local_user.UserDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,20 +25,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase,
-    private val saveCredentialsUseCase: SaveCredentialsUseCase,
-    private val saveTokenUseCase: SaveTokenUseCase,
+    private val authenticateUserUseCase: AuthenticateUserUseCase,
+    private val storeUserCredentialsLocallyUseCase: StoreUserCredentialsLocallyUseCase,
+    private val storeAuthTokensLocallyUseCase: StoreAuthTokensLocallyUseCase,
     private val userDetailsUseCase: UserDetailsUseCase,
     private val getCountriesUseCase: GetCountriesUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<AuthUiState>(AuthUiState.Idle)
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
-
     private val _countries = MutableStateFlow<List<Country>>(emptyList())
     val countries: StateFlow<List<Country>> = _countries
-
     private val _profileImage = MutableStateFlow<Uri?>(null)
     val profileImage = _profileImage.asStateFlow()
+
 
     init {
         fetchCountries()
@@ -47,17 +46,6 @@ class AuthViewModel @Inject constructor(
     fun onProfileImageSelected(uri: Uri) {
         _profileImage.value = uri
     }
-
-    fun createAccount(username: String, password: String, phone: String) {
-        if (username.isBlank() || password.isBlank()) return
-
-        viewModelScope.launch {
-            saveCredentialsUseCase(username, password, phone)
-            // Here you would typically also call a repository function to create the account on the server
-            // For now, we simulate success or just save locally as requested
-        }
-    }
-
 
     fun fetchCountries() {
         viewModelScope.launch {
@@ -97,9 +85,9 @@ class AuthViewModel @Inject constructor(
 
     fun readImageBytes(
         context: Context,
-        uri: Uri?
+        uri: Uri?,
     ): ByteArray {
-        if (uri==null) {
+        if (uri == null) {
             throw IllegalStateException("Image URI is null")
         }
         return context.contentResolver.openInputStream(uri)?.use { inputStream ->
@@ -110,17 +98,14 @@ class AuthViewModel @Inject constructor(
 
     fun loginValidation(
         username: String, password: String, phone: String, profileImage: Uri?,
-        context: Context
+        context: Context,
     ) {
-        AppLogger.d("--------------","hello")
-        AppLogger.d(profileImage.toString(),"profileImage")
+        AppLogger.d("--------------", "hello")
+        AppLogger.d(profileImage.toString(), "profileImage")
         val imageBytes = readImageBytes(context = context, profileImage)
-        AppLogger.d(imageBytes.toString(),"imageBytes")
-
+        AppLogger.d(imageBytes.toString(), "imageBytes")
         val requestBody = imageBytes.toRequestBody("image/*".toMediaType())
-
-        AppLogger.d(requestBody.toString(),"requestBody")
-
+        AppLogger.d(requestBody.toString(), "requestBody")
 
         val multipartBody = MultipartBody.Part.createFormData(
             name = "profile_image",
@@ -128,10 +113,7 @@ class AuthViewModel @Inject constructor(
             body = requestBody
         )
 
-        AppLogger.d(multipartBody.toString(),"multipartBody")
-
-
-
+        AppLogger.d(multipartBody.toString(), "multipartBody")
 
 
 //        Temp data for room database
@@ -139,10 +121,20 @@ class AuthViewModel @Inject constructor(
         _uiState.value = AuthUiState.Loading
         viewModelScope.launch {
             try {
-                val result = loginUseCase.invoke(username, password)
+                val result = authenticateUserUseCase.invoke(username, password)
                 result.onSuccess { user ->
-                    // Save token after successful login
-                    saveTokenUseCase(user.accessToken, user.refreshToken)
+                    storeAuthTokensLocallyUseCase(user.accessToken, user.refreshToken)
+                    storeUserCredentialsLocallyUseCase(
+                        username,
+                        firstname = user.firstName,
+                        lastname = user.lastName,
+                        phone = phone,
+                        email = user.email,
+                        profileImage = user.image,
+                        gender = user.gender
+                    )
+
+
                     val userDetails = UserDetails(
                         id = 1,
                         username = username,

@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CheckDataViewModel @Inject constructor(
-    private val getSavedCredentialsUseCase: GetSavedCredentialsUseCase,
-    private val getAccessTokenUseCase: GetAccessTokenUseCase
+//    private val getSavedCredentialsUseCase: GetSavedCredentialsUseCase,
+//    private val getAccessTokenUseCase: GetAccessTokenUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<CheckDataUiState>(CheckDataUiState.Loading)

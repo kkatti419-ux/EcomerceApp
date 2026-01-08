@@ -2,7 +2,6 @@ package com.example.apiintegration.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.apiintegration.data.local.UserPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

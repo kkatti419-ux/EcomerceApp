@@ -1,23 +1,22 @@
 package com.example.apiintegration.domain.usecase
 
-import com.example.apiintegration.domain.repository.AuthRepository
+import com.example.apiintegration.domain.repository.ProfileLocalRepository
 import javax.inject.Inject
 
-data class SavedCredentials(
+class SavedCredentials(
     val username: String?,
     val password: String?,
     val phone:String?
 )
 
 class GetSavedCredentialsUseCase @Inject constructor(
-    private val repository: AuthRepository
+    private val profileLocalRepository: ProfileLocalRepository
 ) {
     operator fun invoke(): SavedCredentials {
         return SavedCredentials(
-            username = repository.getSavedUsername(),
-            password = repository.getSavedPassword(),
-            phone = repository.getPhone()
-
+            username = profileLocalRepository.getUsernameFromLocalStorage(),
+            password = profileLocalRepository.getSavedPasswordFromLocalStorage(),
+            phone = profileLocalRepository.getPhoneFromLocalStorage()
         )
     }
 }
