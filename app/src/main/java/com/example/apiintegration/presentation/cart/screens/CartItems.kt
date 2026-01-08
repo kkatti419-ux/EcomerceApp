@@ -1,4 +1,4 @@
-package com.example.apiintegration.presentation.cart
+package com.example.apiintegration.presentation.cart.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,7 +24,7 @@ import com.example.apiintegration.domain.model.Cart.Product
 
 
 @Composable
-fun ProductItem1(
+fun CartItem(
     product: Product,
     navController: NavController
 ) {

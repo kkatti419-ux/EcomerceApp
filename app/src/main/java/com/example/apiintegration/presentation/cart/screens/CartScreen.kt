@@ -1,6 +1,5 @@
-package com.example.apiintegration.presentation.cart
+package com.example.apiintegration.presentation.cart.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,29 +15,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-
+import androidx.navigation.compose.rememberNavController
+import com.example.apiintegration.presentation.cart.CartViewModel
+import com.example.apiintegration.presentation.cart.CartsUiState
 
 @Composable
-fun CartScreen(
+fun CartScreenContent(
+    uiState: CartsUiState,
     navController: NavController,
-    cartViewModel: CartViewModel = hiltViewModel(),
-
-
 ) {
-    val uiState by cartViewModel.uiState.collectAsState()
-
-    LaunchedEffect(Unit) {
-        cartViewModel.getCarts()
-    }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(12.dp)
-
     ) {
         when (uiState) {
 
@@ -49,7 +42,7 @@ fun CartScreen(
             }
 
             is CartsUiState.Success -> {
-                val carts = (uiState as CartsUiState.Success).data
+                val carts = uiState.data
 
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
@@ -63,7 +56,7 @@ fun CartScreen(
 
             is CartsUiState.Error -> {
                 Text(
-                    text = (uiState as CartsUiState.Error).message,
+                    text = uiState.message,
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.Red
                 )
@@ -78,4 +71,52 @@ fun CartScreen(
             }
         }
     }
+}
+
+
+
+@Composable
+fun CartScreen(
+    navController: NavController,
+    cartViewModel: CartViewModel = hiltViewModel(),
+) {
+    val uiState by cartViewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        cartViewModel.getCarts()
+    }
+
+    CartScreenContent(
+        uiState = uiState,
+        navController = navController
+    )
+}
+
+
+
+@Composable
+@Preview(showBackground = true, showSystemUi = true)
+fun PreviewCartScreen_Loading() {
+    CartScreenContent(
+        uiState = CartsUiState.Loading,
+        navController = rememberNavController()
+    )
+}
+
+@Composable
+@Preview(showBackground = true, showSystemUi = true)
+fun PreviewCartScreen_Empty() {
+    CartScreenContent(
+        uiState = CartsUiState.Idle,
+        navController = rememberNavController()
+    )
+}
+
+@Composable
+@Preview(showBackground = true, showSystemUi = true)
+fun PreviewCartScreen_Error() {
+    CartScreenContent(
+        uiState = CartsUiState.Error("Failed to load carts"),
+        navController = rememberNavController()
+    )
 }

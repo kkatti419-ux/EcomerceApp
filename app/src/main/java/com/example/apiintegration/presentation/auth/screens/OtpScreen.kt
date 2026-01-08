@@ -1,4 +1,4 @@
-package com.example.apiintegration.presentation.auth
+package com.example.apiintegration.presentation.auth.screens
 
 import AppDialogueBox
 import androidx.compose.foundation.background
@@ -22,12 +22,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.apiintegration.common.ui.OtpInputField
 import com.example.apiintegration.navigation.Screen
 import kotlinx.coroutines.delay
+
 
 @Composable
 fun OtpScreen(
@@ -147,3 +150,19 @@ fun OtpScreen(
             otp = ""
         })
 }
+
+@Composable
+@Preview(showBackground = true, showSystemUi = true)
+fun PreviewOtpScreen() {
+    val navController = rememberNavController()
+
+    OtpScreen(
+        phoneNumber = "+91 98765 43210",
+        onOtpVerified = {},
+        onResendOtp = {},
+        navController = navController
+    )
+}
+
+
+

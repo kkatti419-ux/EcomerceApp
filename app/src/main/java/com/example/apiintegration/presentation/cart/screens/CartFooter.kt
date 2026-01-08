@@ -1,4 +1,4 @@
-package com.example.apiintegration.presentation.cart
+package com.example.apiintegration.presentation.cart.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

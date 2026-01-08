@@ -1,4 +1,4 @@
-package com.example.apiintegration.presentation.cart
+package com.example.apiintegration.presentation.cart.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -31,7 +31,7 @@ fun CartCard(cart: Cart,navController: NavController) {
             Spacer(modifier = Modifier.height(8.dp))
 
             cart.products.forEach { product ->
-                ProductItem1(product,navController,)
+                CartItem(product, navController,)
                 Divider()
             }
 

@@ -22,6 +22,5 @@ import com.example.apiintegration.data.local.entity.UserDetailsEntity
 abstract class AppDatabase : RoomDatabase() {
     abstract val userDao: UserDao
     abstract val postDao: PostDao
-
     abstract val userDetailsDao: UserDetailsDao
 }

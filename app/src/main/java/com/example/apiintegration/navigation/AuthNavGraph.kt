@@ -3,8 +3,8 @@ package com.example.apiintegration.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.apiintegration.presentation.auth.OtpScreen
-import com.example.apiintegration.presentation.auth.SignInScreen
+import com.example.apiintegration.presentation.auth.screens.OtpScreen
+import com.example.apiintegration.presentation.auth.screens.SignInScreen
 
 fun NavGraphBuilder.authNavGraph(
     navController: NavController,
