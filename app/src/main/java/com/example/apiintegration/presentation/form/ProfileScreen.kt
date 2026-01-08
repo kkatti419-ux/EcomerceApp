@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,14 +31,16 @@ import coil.request.ImageRequest
 import com.example.apiintegration.R
 import com.example.apiintegration.common.ui.AppOutlinedTextField
 import com.example.apiintegration.common.ui.PrimaryButton
+import com.example.apiintegration.common.utils.AppLogger
 import com.example.apiintegration.ui.theme.ApiIntegrationTheme
 
 @Composable
 fun ProfileScreenContent(
     firstname: String,
     lastname: String,
-    place: String,
-    age: String,
+    email:String,
+    gender:String,
+    imageUrl:String,
     selectedUserId: Int?,
     onFirstnameChange: (String) -> Unit,
     onLastnameChange: (String) -> Unit,
@@ -54,7 +58,7 @@ fun ProfileScreenContent(
     ) {
 
 
-        ProfileAvatar(imageUrl = null)
+        ProfileAvatar(imageUrl = imageUrl)
 
         AppOutlinedTextField(
             value = firstname, onValueChange = onFirstnameChange, label = "Firstname"
@@ -62,30 +66,29 @@ fun ProfileScreenContent(
 
         AppOutlinedTextField(
             singleLine = true,
-            value = firstname, onValueChange = onFirstnameChange, label = "Firstname"
+            value = lastname,
+            onValueChange = onFirstnameChange,
+            label = "Lastname"
         )
 
         AppOutlinedTextField(
-            value = firstname, onValueChange = onFirstnameChange, label = "Firstname"
+            value = email, onValueChange = onFirstnameChange, label = "Email"
         )
 
         AppOutlinedTextField(
-            value = lastname, onValueChange = onLastnameChange, label = "Lastname"
+            value = gender, onValueChange = onLastnameChange, label = "Gender"
         )
 
-        AppOutlinedTextField(
-            value = place, onValueChange = onPlaceChange, label = "Place"
-        )
+//        AppOutlinedTextField(
+//            value = email, onValueChange = onPlaceChange, label = "Place"
+//        )
 
-        AppOutlinedTextField(
-            value = age, onValueChange = onAgeChange, label = "Age"
-        )
 
 
         // 👇 This pushes content below to the bottom
         Spacer(modifier = Modifier.weight(1f))
 
-        PrimaryButton(onClick = {}, text = "Save User")
+        PrimaryButton(onClick = {}, text = "Update User")
     }
 
 
@@ -97,30 +100,64 @@ fun ProfileScreen(
 ) {
     var firstname by remember { mutableStateOf("") }
     var lastname by remember { mutableStateOf("") }
-    var place by remember { mutableStateOf("") }
-    var age by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var gender by remember { mutableStateOf("") }
+    var imageUrl by remember { mutableStateOf("") }
     var selectedUserId by remember { mutableStateOf<Int?>(null) }
+
+    val credentials by viewModel.credentials.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadUserCredentials()
+    }
+    LaunchedEffect(credentials) {
+        credentials?.let {
+            firstname = it.firstName ?: ""
+            lastname = it.lastName ?: ""
+            email = it.email ?: ""
+            gender = it.gender ?: ""
+            imageUrl = it.profileImage ?: ""
+        }
+    }
+
+    AppLogger.d("ProfileScreen", "firstname: $lastname, lastname: $lastname")
+    AppLogger.d("ProfileScreen", "selectedUserId: $selectedUserId")
+    AppLogger.d("ProfileScreen", "imageUrl: $imageUrl")
+    AppLogger.d("ProfileScreen", "email: $email")
+    AppLogger.d("ProfileScreen", "gender: $gender")
+
+
+
+
+
+
+
 
     ProfileScreenContent(
         firstname = firstname,
         lastname = lastname,
-        place = place,
-        age = age,
         selectedUserId = selectedUserId,
         onFirstnameChange = { firstname = it },
         onLastnameChange = { lastname = it },
-        onPlaceChange = { place = it },
-        onAgeChange = { age = it },
         onSaveClick = {
             viewModel.upsertUser(
-                firstname, lastname, selectedUserId, place, age
+                firstname, lastname, selectedUserId, email, gender
             )
         },
+        onPlaceChange = {
+
+        },
+        onAgeChange = {
+
+        },
         onCancelEdit = {
-            firstname = ""
-            lastname = ""
-            selectedUserId = null
-        })
+
+        },
+        email = email,
+        gender = gender,
+        imageUrl = imageUrl
+
+    )
 }
 
 
@@ -131,8 +168,9 @@ fun PreviewProfileScreen() {
         ProfileScreenContent(
             firstname = "John",
             lastname = "Doe",
-            place = "Bangalore",
-            age = "26",
+            gender = "Male",
+            email = "abc@Gmail.com",
+            imageUrl = "",
             selectedUserId = null,
             onFirstnameChange = {},
             onLastnameChange = {},

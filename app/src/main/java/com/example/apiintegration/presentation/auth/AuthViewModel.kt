@@ -123,7 +123,10 @@ class AuthViewModel @Inject constructor(
             try {
                 val result = authenticateUserUseCase.invoke(username, password)
                 result.onSuccess { user ->
+                    AppLogger.d(user.toString(), "user")
+
                     storeAuthTokensLocallyUseCase(user.accessToken, user.refreshToken)
+
                     storeUserCredentialsLocallyUseCase(
                         username,
                         firstname = user.firstName,
@@ -133,7 +136,6 @@ class AuthViewModel @Inject constructor(
                         profileImage = user.image,
                         gender = user.gender
                     )
-
 
                     val userDetails = UserDetails(
                         id = 1,

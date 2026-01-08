@@ -1,5 +1,6 @@
 package com.example.apiintegration.domain.repository
 
+import com.example.apiintegration.domain.model.LocalStorage.LocalUserCredentials
 import com.example.apiintegration.domain.model.UserProfile
 import kotlinx.coroutines.flow.Flow
 
@@ -11,12 +12,20 @@ interface ProfileLocalRepository {
 
     suspend fun saveTokenToLocalStorage(accessToken: String, refreshToken: String)
     fun getUsernameFromLocalStorage(): String?
+
+    fun getFirstNameFromLocalStorage():String?
+
+    fun getLastNameFromLocalStorage():String?
+
+    fun getEmailFromLocalStorage():String?
     fun getPhoneFromLocalStorage():String?
     fun getSavedPasswordFromLocalStorage(): String?
     fun getAccessTokenFromLocalStorage(): String?
     fun getRefreshTokenFromLocalStorage(): String?
-
     suspend fun saveCredentialsToLocalStorage(username: String,firstname:String,lastname:String,phone: String,email:String,profileImage:String,gender:String)
+
+    fun getLocalUserCredentials(): LocalUserCredentials
+
 
 }
 

@@ -2,11 +2,14 @@ package com.example.apiintegration.presentation.form
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.apiintegration.domain.model.LocalStorage.LocalUserCredentials
 import com.example.apiintegration.domain.model.UserProfile
+import com.example.apiintegration.domain.usecase.local_storage.GetLocalUserCredentialsUseCase
 import com.example.apiintegration.domain.usecase.local_user.DeleteUserUseCase
 import com.example.apiintegration.domain.usecase.local_user.GetAllUsersUseCase
 import com.example.apiintegration.domain.usecase.local_user.UpsertUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -17,8 +20,17 @@ import javax.inject.Inject
 class FormViewModel @Inject constructor(
     private val upsertUserUseCase: UpsertUserUseCase,
     private val deleteUserUseCase: DeleteUserUseCase,
+    private val getLocalUserCredentialsUseCase: GetLocalUserCredentialsUseCase,
+
     getAllUsersUseCase: GetAllUsersUseCase
 ) : ViewModel() {
+
+    private val _credentials = MutableStateFlow<LocalUserCredentials?>(null)
+    val credentials: StateFlow<LocalUserCredentials?> = _credentials
+
+    fun loadUserCredentials() {
+        _credentials.value = getLocalUserCredentialsUseCase()
+    }
 
     val users: StateFlow<List<UserProfile>> = getAllUsersUseCase()
         .stateIn(

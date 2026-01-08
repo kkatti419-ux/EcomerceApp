@@ -52,4 +52,28 @@ class UserPreferencesStorage @Inject constructor(
     fun getPhoneNumber(): String? {
         return sharedPreferences.getString(PreferenceKeys.PHONE_NUMBER, null)
     }
+
+    fun getFirstName(): String? {
+        return sharedPreferences.getString(PreferenceKeys.FIRST_NAME, null)
+    }
+
+    fun getLastName(): String? {
+        return sharedPreferences.getString(PreferenceKeys.LAST_NAME, null)
+    }
+
+    fun getEmail(): String? {
+        return sharedPreferences.getString(PreferenceKeys.EMAIL, null)
+    }
+
+    fun getProfileImage(): String? {
+        return sharedPreferences.getString(PreferenceKeys.PROFILE_IMAGE, null)
+    }
+
+    fun getGender(): String? {
+        return sharedPreferences.getString(PreferenceKeys.GENDER, null)
+    }
+
+
+
+
 }

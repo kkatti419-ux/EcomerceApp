@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.apiintegration.presentation.MainScreen.MainScreen
-import com.example.apiintegration.presentation.auth.CheckDataScreen
+//import com.example.apiintegration.presentation.auth.CheckDataScreen
 import com.example.apiintegration.presentation.auth.FetchDataFromRoom
 
 fun NavGraphBuilder.mainNavGraph(navController: NavController) {
@@ -16,7 +16,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController) {
         FetchDataFromRoom()
     }
 
-    composable(route = Screen.CheckDataScreen.route) {
-        CheckDataScreen()
-    }
+//    composable(route = Screen.CheckDataScreen.route) {
+//        CheckDataScreen()
+//    }
 }

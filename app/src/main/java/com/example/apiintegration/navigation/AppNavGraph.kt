@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.apiintegration.presentation.MainScreen.MainScreen
-import com.example.apiintegration.presentation.auth.CheckDataScreen
+//import com.example.apiintegration.presentation.auth.CheckDataScreen
 import com.example.apiintegration.presentation.auth.FetchDataFromRoom
 import com.example.apiintegration.presentation.auth.StartViewModel
 
