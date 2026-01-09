@@ -38,18 +38,17 @@ import com.example.apiintegration.ui.theme.ApiIntegrationTheme
 fun ProfileScreenContent(
     firstname: String,
     lastname: String,
-    email:String,
-    gender:String,
-    imageUrl:String,
+    email: String,
+    gender: String,
+    imageUrl: String,
     selectedUserId: Int?,
     onFirstnameChange: (String) -> Unit,
     onLastnameChange: (String) -> Unit,
-    onPlaceChange: (String) -> Unit,
-    onAgeChange: (String) -> Unit,
+    onEmailChange: (String) -> Unit,
+    onGenderChange: (String) -> Unit,
     onSaveClick: () -> Unit,
     onCancelEdit: () -> Unit,
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -57,42 +56,41 @@ fun ProfileScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-
         ProfileAvatar(imageUrl = imageUrl)
 
         AppOutlinedTextField(
-            value = firstname, onValueChange = onFirstnameChange, label = "Firstname"
+            value = firstname,
+            onValueChange = onFirstnameChange,
+            label = "Firstname"
         )
 
         AppOutlinedTextField(
-            singleLine = true,
             value = lastname,
-            onValueChange = onFirstnameChange,
+            onValueChange = onLastnameChange,
             label = "Lastname"
         )
 
         AppOutlinedTextField(
-            value = email, onValueChange = onFirstnameChange, label = "Email"
+            value = email,
+            onValueChange = onEmailChange,
+            label = "Email"
         )
 
         AppOutlinedTextField(
-            value = gender, onValueChange = onLastnameChange, label = "Gender"
+            value = gender,
+            onValueChange = onGenderChange,
+            label = "Gender"
         )
 
-//        AppOutlinedTextField(
-//            value = email, onValueChange = onPlaceChange, label = "Place"
-//        )
-
-
-
-        // 👇 This pushes content below to the bottom
         Spacer(modifier = Modifier.weight(1f))
 
-        PrimaryButton(onClick = {}, text = "Update User")
+        PrimaryButton(
+            onClick = onSaveClick,
+            text = "Update User"
+        )
     }
-
-
 }
+
 
 @Composable
 fun ProfileScreen(
@@ -120,7 +118,7 @@ fun ProfileScreen(
         }
     }
 
-    AppLogger.d("ProfileScreen", "firstname: $lastname, lastname: $lastname")
+    AppLogger.d("ProfileScreen", "firstname: $firstname, lastname: $lastname")
     AppLogger.d("ProfileScreen", "selectedUserId: $selectedUserId")
     AppLogger.d("ProfileScreen", "imageUrl: $imageUrl")
     AppLogger.d("ProfileScreen", "email: $email")
@@ -132,32 +130,31 @@ fun ProfileScreen(
 
 
 
-
     ProfileScreenContent(
         firstname = firstname,
         lastname = lastname,
+        email = email,
+        gender = gender,
+        imageUrl = imageUrl,
         selectedUserId = selectedUserId,
         onFirstnameChange = { firstname = it },
         onLastnameChange = { lastname = it },
+        onEmailChange = { email = it },
+        onGenderChange = { gender = it },
         onSaveClick = {
-            viewModel.upsertUser(
-                firstname, lastname, selectedUserId, email, gender
+            viewModel.updateUserCredentials(
+                username = credentials?.username.orEmpty(),
+                firstname = firstname,
+                lastname = lastname,
+                phone = credentials?.phone.orEmpty(),
+                email = email,
+                profileImage = imageUrl,
+                gender = gender
             )
         },
-        onPlaceChange = {
-
-        },
-        onAgeChange = {
-
-        },
-        onCancelEdit = {
-
-        },
-        email = email,
-        gender = gender,
-        imageUrl = imageUrl
-
+        onCancelEdit = {}
     )
+
 }
 
 
@@ -174,10 +171,11 @@ fun PreviewProfileScreen() {
             selectedUserId = null,
             onFirstnameChange = {},
             onLastnameChange = {},
-            onPlaceChange = {},
-            onAgeChange = {},
+            onEmailChange = {},
+            onGenderChange = {},
             onSaveClick = {},
-            onCancelEdit = {})
+            onCancelEdit = {}
+        )
     }
 }
 
@@ -192,9 +190,7 @@ fun ProfileAvatar(
     )
 
     Image(
-        painter = painterResource(
-            R.drawable.cloth
-        ),
+        painter = painter,
         contentDescription = "Profile Image",
         modifier = Modifier
             .size(size)

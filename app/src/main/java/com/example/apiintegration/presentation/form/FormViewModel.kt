@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.apiintegration.domain.model.LocalStorage.LocalUserCredentials
 import com.example.apiintegration.domain.model.UserProfile
 import com.example.apiintegration.domain.usecase.local_storage.GetLocalUserCredentialsUseCase
+import com.example.apiintegration.domain.usecase.local_storage.UpdateLocalUserCredentialsUseCase
 import com.example.apiintegration.domain.usecase.local_user.DeleteUserUseCase
 import com.example.apiintegration.domain.usecase.local_user.GetAllUsersUseCase
 import com.example.apiintegration.domain.usecase.local_user.UpsertUserUseCase
@@ -21,8 +22,9 @@ class FormViewModel @Inject constructor(
     private val upsertUserUseCase: UpsertUserUseCase,
     private val deleteUserUseCase: DeleteUserUseCase,
     private val getLocalUserCredentialsUseCase: GetLocalUserCredentialsUseCase,
+    private val updateLocalUserCredentialsUseCase: UpdateLocalUserCredentialsUseCase,
 
-    getAllUsersUseCase: GetAllUsersUseCase
+    getAllUsersUseCase: GetAllUsersUseCase,
 ) : ViewModel() {
 
     private val _credentials = MutableStateFlow<LocalUserCredentials?>(null)
@@ -32,18 +34,25 @@ class FormViewModel @Inject constructor(
         _credentials.value = getLocalUserCredentialsUseCase()
     }
 
-    val users: StateFlow<List<UserProfile>> = getAllUsersUseCase()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = emptyList()
+    val users: StateFlow<List<UserProfile>> = getAllUsersUseCase().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = emptyList()
+    )
+
+    fun upsertUser(
+        firstName: String,
+        lastName: String,
+        id: Int? = null,
+        place: String,
+        age: String,
+    ) {
+        if (firstName.isBlank() || lastName.isBlank() || place.isBlank() || age.isBlank()) return
+
+
+        val user = UserProfile(
+            id = id, firstName = firstName, lastName = lastName, place = place, age = age
         )
-
-    fun upsertUser(firstName: String, lastName: String, id: Int? = null,place: String,age:String) {
-        if (firstName.isBlank() || lastName.isBlank()||place.isBlank()||age.isBlank()) return
-
-
-        val user = UserProfile(id = id, firstName = firstName, lastName = lastName,place=place,age=age)
         viewModelScope.launch {
             upsertUserUseCase(user)
         }
@@ -54,4 +63,27 @@ class FormViewModel @Inject constructor(
             deleteUserUseCase(user)
         }
     }
+
+    fun updateUserCredentials(
+        username: String,
+        firstname: String,
+        lastname: String,
+        phone: String,
+        email: String,
+        profileImage: String,
+        gender: String,
+    ) {
+        viewModelScope.launch {
+            updateLocalUserCredentialsUseCase(
+                username = username,
+                firstname = firstname,
+                lastname = lastname,
+                phone = phone,
+                email = email,
+                profileImage = profileImage,
+                gender = gender
+            )
+        }
+    }
+
 }

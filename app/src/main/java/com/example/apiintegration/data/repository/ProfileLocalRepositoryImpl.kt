@@ -98,6 +98,27 @@ class ProfileLocalRepositoryImpl @Inject constructor(
         )
     }
 
+    override fun updateUserCredentials(
+        username: String,
+        firstname: String,
+        lastname: String,
+        phone: String,
+        email: String,
+        profileImage: String,
+        gender: String,
+    ) {
+        authLocalDataSource.saveCredentials(
+            username = username,
+            firstname = firstname,
+            lastname = lastname,
+            phone = phone,
+            email = email,
+            profileImage = profileImage,
+            gender = gender
+        )
+    }
+
+
 
 //    private fun UserProfile.toEntity(): UserEntity {
 //        return UserEntity(

@@ -3,37 +3,55 @@ package com.example.apiintegration.presentation.Intro
 import IntroCard
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.apiintegration.domain.model.Intro.IntroPage
+import com.example.apiintegration.presentation.form.FormViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun IntroScreen(
     pages: List<IntroPage>,
-    onFinish: () -> Unit
+    onFinish: () -> Unit,
+    viewModel: FormViewModel = hiltViewModel() // ✅ ViewModel injected
 ) {
     val pagerState = rememberPagerState(pageCount = { pages.size })
+
+    // ✅ Collect user credentials from ViewModel
+    val credentials by viewModel.credentials.collectAsState()
+
+    // ✅ Local UI state (NO UI IMPACT)
+    var firstname by remember { mutableStateOf("") }
+    var lastname by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var gender by remember { mutableStateOf("") }
+    var imageUrl by remember { mutableStateOf("") }
+
+    // ✅ Load local storage ONCE
+    LaunchedEffect(Unit) {
+        viewModel.loadUserCredentials()
+    }
+
+    // ✅ Update local UI state when data changes
+    LaunchedEffect(credentials) {
+        credentials?.let {
+            firstname = it.firstName ?: ""
+            lastname = it.lastName ?: ""
+            email = it.email ?: ""
+            gender = it.gender ?: ""
+            imageUrl = it.profileImage ?: ""
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -41,6 +59,11 @@ fun IntroScreen(
             .background(Color(0xFFF5F6FA)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(firstname)
+        Text(lastname)
+        Text(email)
+        Text(gender)
+        Text(imageUrl)
 
         Spacer(modifier = Modifier.height(60.dp))
 
@@ -51,6 +74,8 @@ fun IntroScreen(
         ) { page ->
             IntroCard(page = pages[page])
         }
+
+
 
         Spacer(modifier = Modifier.height(24.dp))
 

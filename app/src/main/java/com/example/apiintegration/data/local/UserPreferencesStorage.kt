@@ -22,7 +22,7 @@ class UserPreferencesStorage @Inject constructor(
         sharedPreferences.edit {
             putString(PreferenceKeys.KEY_USERNAME, username)
             putString(PreferenceKeys.FIRST_NAME, firstname)
-            putString(PreferenceKeys.LAST_NAME, firstname)
+            putString(PreferenceKeys.LAST_NAME, lastname)
             putString(PreferenceKeys.PHONE_NUMBER, phone)
             putString(PreferenceKeys.EMAIL, email)
             putString(PreferenceKeys.PROFILE_IMAGE, profileImage)
