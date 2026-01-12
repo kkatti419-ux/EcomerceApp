@@ -19,49 +19,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FormViewModel @Inject constructor(
-    private val upsertUserUseCase: UpsertUserUseCase,
-    private val deleteUserUseCase: DeleteUserUseCase,
-    private val getLocalUserCredentialsUseCase: GetLocalUserCredentialsUseCase,
     private val updateLocalUserCredentialsUseCase: UpdateLocalUserCredentialsUseCase,
-
-    getAllUsersUseCase: GetAllUsersUseCase,
+    private val getLocalUserCredentialsUseCase: GetLocalUserCredentialsUseCase,
 ) : ViewModel() {
 
     private val _credentials = MutableStateFlow<LocalUserCredentials?>(null)
     val credentials: StateFlow<LocalUserCredentials?> = _credentials
 
+    private val _uiState = MutableStateFlow<ProfileUiState>(ProfileUiState.Idle)
+    val uiState: StateFlow<ProfileUiState> = _uiState
+
     fun loadUserCredentials() {
         _credentials.value = getLocalUserCredentialsUseCase()
-    }
-
-    val users: StateFlow<List<UserProfile>> = getAllUsersUseCase().stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList()
-    )
-
-    fun upsertUser(
-        firstName: String,
-        lastName: String,
-        id: Int? = null,
-        place: String,
-        age: String,
-    ) {
-        if (firstName.isBlank() || lastName.isBlank() || place.isBlank() || age.isBlank()) return
-
-
-        val user = UserProfile(
-            id = id, firstName = firstName, lastName = lastName, place = place, age = age
-        )
-        viewModelScope.launch {
-            upsertUserUseCase(user)
-        }
-    }
-
-    fun deleteUser(user: UserProfile) {
-        viewModelScope.launch {
-            deleteUserUseCase(user)
-        }
     }
 
     fun updateUserCredentials(
@@ -74,16 +43,29 @@ class FormViewModel @Inject constructor(
         gender: String,
     ) {
         viewModelScope.launch {
-            updateLocalUserCredentialsUseCase(
-                username = username,
-                firstname = firstname,
-                lastname = lastname,
-                phone = phone,
-                email = email,
-                profileImage = profileImage,
-                gender = gender
-            )
+            _uiState.value = ProfileUiState.Loading
+            try {
+                updateLocalUserCredentialsUseCase(
+                    username = username,
+                    firstname = firstname,
+                    lastname = lastname,
+                    phone = phone,
+                    email = email,
+                    profileImage = profileImage,
+                    gender = gender
+                )
+                _uiState.value = ProfileUiState.Success
+            } catch (e: Exception) {
+                _uiState.value =
+                    ProfileUiState.Error(e.message ?: "Something went wrong")
+            }
         }
     }
+}
 
+sealed class ProfileUiState {
+    object Idle : ProfileUiState()
+    object Loading : ProfileUiState()
+    object Success : ProfileUiState()
+    data class Error(val message: String) : ProfileUiState()
 }

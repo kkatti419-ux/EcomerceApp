@@ -1,13 +1,17 @@
 package com.example.apiintegration.presentation.form
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -42,6 +46,7 @@ fun ProfileScreenContent(
     gender: String,
     imageUrl: String,
     selectedUserId: Int?,
+    isLoading: Boolean, // ✅ ADD THIS
     onFirstnameChange: (String) -> Unit,
     onLastnameChange: (String) -> Unit,
     onEmailChange: (String) -> Unit,
@@ -59,35 +64,30 @@ fun ProfileScreenContent(
         ProfileAvatar(imageUrl = imageUrl)
 
         AppOutlinedTextField(
-            value = firstname,
-            onValueChange = onFirstnameChange,
-            label = "Firstname"
+            value = firstname, onValueChange = onFirstnameChange, label = "Firstname"
         )
 
         AppOutlinedTextField(
-            value = lastname,
-            onValueChange = onLastnameChange,
-            label = "Lastname"
+            value = lastname, onValueChange = onLastnameChange, label = "Lastname"
         )
 
         AppOutlinedTextField(
-            value = email,
-            onValueChange = onEmailChange,
-            label = "Email"
+            value = email, onValueChange = onEmailChange, label = "Email"
         )
 
         AppOutlinedTextField(
-            value = gender,
-            onValueChange = onGenderChange,
-            label = "Gender"
+            value = gender, onValueChange = onGenderChange, label = "Gender"
         )
 
         Spacer(modifier = Modifier.weight(1f))
 
         PrimaryButton(
             onClick = onSaveClick,
-            text = "Update User"
+            text = "Update User",
+            enabled = isLoading
+//            enabled = uiState !is ProfileUiState.Loading
         )
+
     }
 }
 
@@ -96,65 +96,70 @@ fun ProfileScreenContent(
 fun ProfileScreen(
     viewModel: FormViewModel = hiltViewModel(),
 ) {
+    val credentials by viewModel.credentials.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
+
     var firstname by remember { mutableStateOf("") }
     var lastname by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
     var imageUrl by remember { mutableStateOf("") }
-    var selectedUserId by remember { mutableStateOf<Int?>(null) }
-
-    val credentials by viewModel.credentials.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.loadUserCredentials()
     }
+
     LaunchedEffect(credentials) {
         credentials?.let {
-            firstname = it.firstName ?: ""
-            lastname = it.lastName ?: ""
-            email = it.email ?: ""
-            gender = it.gender ?: ""
-            imageUrl = it.profileImage ?: ""
+            firstname = it.firstName.orEmpty()
+            lastname = it.lastName.orEmpty()
+            email = it.email.orEmpty()
+            gender = it.gender.orEmpty()
+            imageUrl = it.profileImage.orEmpty()
         }
     }
 
-    AppLogger.d("ProfileScreen", "firstname: $firstname, lastname: $lastname")
-    AppLogger.d("ProfileScreen", "selectedUserId: $selectedUserId")
-    AppLogger.d("ProfileScreen", "imageUrl: $imageUrl")
-    AppLogger.d("ProfileScreen", "email: $email")
-    AppLogger.d("ProfileScreen", "gender: $gender")
+    Box(modifier = Modifier.fillMaxSize()) {
 
+        ProfileScreenContent(
+            firstname = firstname,
+            lastname = lastname,
+            email = email,
+            gender = gender,
+            imageUrl = imageUrl,
+            selectedUserId = null,
+            isLoading = uiState is ProfileUiState.Loading, // ✅ PASS HERE
 
+            onFirstnameChange = { firstname = it },
+            onLastnameChange = { lastname = it },
+            onEmailChange = { email = it },
+            onGenderChange = { gender = it },
+            onSaveClick = {
+                viewModel.updateUserCredentials(
+                    username = credentials?.username.orEmpty(),
+                    firstname = firstname,
+                    lastname = lastname,
+                    phone = credentials?.phone.orEmpty(),
+                    email = email,
+                    profileImage = imageUrl,
+                    gender = gender
+                )
+            },
+            onCancelEdit = {}
+        )
 
-
-
-
-
-    ProfileScreenContent(
-        firstname = firstname,
-        lastname = lastname,
-        email = email,
-        gender = gender,
-        imageUrl = imageUrl,
-        selectedUserId = selectedUserId,
-        onFirstnameChange = { firstname = it },
-        onLastnameChange = { lastname = it },
-        onEmailChange = { email = it },
-        onGenderChange = { gender = it },
-        onSaveClick = {
-            viewModel.updateUserCredentials(
-                username = credentials?.username.orEmpty(),
-                firstname = firstname,
-                lastname = lastname,
-                phone = credentials?.phone.orEmpty(),
-                email = email,
-                profileImage = imageUrl,
-                gender = gender
-            )
-        },
-        onCancelEdit = {}
-    )
-
+        // 🔥 Loading Overlay
+        if (uiState is ProfileUiState.Loading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.3f)),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+    }
 }
 
 
@@ -169,13 +174,13 @@ fun PreviewProfileScreen() {
             email = "abc@Gmail.com",
             imageUrl = "",
             selectedUserId = null,
+            isLoading = false,
             onFirstnameChange = {},
             onLastnameChange = {},
             onEmailChange = {},
             onGenderChange = {},
             onSaveClick = {},
-            onCancelEdit = {}
-        )
+            onCancelEdit = {})
     }
 }
 

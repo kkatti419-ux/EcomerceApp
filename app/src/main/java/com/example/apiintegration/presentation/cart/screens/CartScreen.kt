@@ -35,7 +35,7 @@ fun CartScreenContent(
     ) {
         when (uiState) {
 
-            CartsUiState.Loading -> {
+           is CartsUiState.Loading -> {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center)
                 )

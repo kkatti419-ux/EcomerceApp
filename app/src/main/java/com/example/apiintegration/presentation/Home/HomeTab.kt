@@ -121,7 +121,7 @@ fun HomeTab(controller: NavController) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             repeat(5) {
                 Image(
-                    painter = painterResource(R.drawable.cloth),
+                    painter = painterResource(R.drawable.bubble_2),
                     contentDescription = null,
                     modifier = Modifier
                         .size(56.dp)
