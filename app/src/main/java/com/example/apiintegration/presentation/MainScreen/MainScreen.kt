@@ -21,6 +21,8 @@ import com.example.apiintegration.navigation.BottomTab
 import com.example.apiintegration.presentation.Home.ColorScreen
 import com.example.apiintegration.presentation.Home.HomeTab
 import com.example.apiintegration.presentation.form.ProfileScreen
+import com.example.apiintegration.presentation.recipe.RecipeScreen
+import com.example.apiintegration.presentation.recipe.RecipeScreenRoute
 
 @Composable
 fun MainScreen(rootNavController: NavController) {
@@ -64,7 +66,8 @@ fun MainScreen(rootNavController: NavController) {
                 HomeTab(controller = rootNavController)
             }
             composable(BottomTab.Favorites.route) {
-                ColorScreen(Color(0xFFFFF3E0), "Favorites")
+//                rec(Color(0xFFFFF3E0), "Favorites")
+                RecipeScreenRoute(rootNavController)
             }
             composable(BottomTab.Orders.route) {
                 ColorScreen(Color(0xFFE3F2FD), "Orders")

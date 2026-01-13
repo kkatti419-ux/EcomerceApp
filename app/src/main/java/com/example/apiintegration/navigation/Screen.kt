@@ -8,6 +8,7 @@ sealed class Screen(val route: String) {
     object ProfileScreen : Screen("profile")
     object ProductList : Screen("product")
     object CheckDataScreen : Screen("scr")
+    object RecipeDataScreen : Screen("recipe")
     object OtpInputField : Screen("OTP")
 
     object FetchDataFromRoom:Screen("room")
