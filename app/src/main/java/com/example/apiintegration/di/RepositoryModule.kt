@@ -11,8 +11,10 @@ import com.example.apiintegration.data.repository.ProfileLocalRepositoryImpl
 import com.example.apiintegration.domain.repository.GeminiRepository
 import com.example.apiintegration.domain.repository.ProductRepository
 import com.example.apiintegration.data.repository.ProductRepositoryImpl
+import com.example.apiintegration.data.repository.RecipeRepositoryImpl
 import com.example.apiintegration.data.repository.UserDetailsRepositoryImpl
 import com.example.apiintegration.domain.repository.Cartrepository
+import com.example.apiintegration.domain.repository.RecipeRepository
 import com.example.apiintegration.domain.repository.UserDetailReposirotory
 import dagger.Binds
 import dagger.Module
@@ -78,6 +80,11 @@ abstract class RepositoryModule {
         cartRepositoryImpl: CartRepositoryImpl
     ): Cartrepository
 
+    @Binds
+    @Singleton
+    abstract fun bindRecipeRepository(
+        recipeRepositoryImpl: RecipeRepositoryImpl
+    ): RecipeRepository
 
 }
 

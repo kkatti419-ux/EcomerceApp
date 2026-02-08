@@ -77,7 +77,7 @@ fun SignInScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(28.dp))
 
             Text(
                 text = "Create\nAccount",

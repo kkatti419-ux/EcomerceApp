@@ -5,7 +5,11 @@ import com.example.apiintegration.data.remote.api.CartApi
 import com.example.apiintegration.data.remote.api.GeminiApi
 import com.example.apiintegration.data.remote.api.PostApi
 import com.example.apiintegration.data.remote.api.ProductApi
+import com.example.apiintegration.data.remote.api.RecipeApi
+import com.example.apiintegration.data.repository.RecipeRepositoryImpl
+import com.example.apiintegration.domain.repository.RecipeRepository
 import com.squareup.moshi.Moshi
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -101,4 +105,13 @@ object NetworkModule {
     fun providePostApi(
         @DummyRetrofit retrofit: Retrofit,
     ): PostApi = retrofit.create(PostApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideRecipeApi(
+        @DummyRetrofit retrofit: Retrofit,
+    ): RecipeApi = retrofit.create(RecipeApi::class.java)
+
+
+
 }
