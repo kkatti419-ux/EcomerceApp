@@ -18,13 +18,14 @@ fun AppNavGraph(startViewModel: StartViewModel = hiltViewModel()) {
 
     val startDestination by startViewModel.startDestination.collectAsState()
 
-    NavHost(navController = navController, startDestination = Screen.StartScreen.route) {
+    NavHost(navController = navController, startDestination = Screen.ContactsListScreen.route) {
         introNavGraph(navController)
         authNavGraph(navController)
         postNavGraph(navController)
         productNavGraph(navController)
         profileNavGraph(navController)
         mainNavGraph(navController)
+        nativeGraph(navController)
     }
 }
 

@@ -13,6 +13,7 @@ android {
     defaultConfig {
         applicationId = "com.example.apiintegration"
         minSdk = 24      // ✅ FIXED
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -122,4 +123,8 @@ dependencies {
 //| Error image         | ❌ No            | ✔ Yes |
 //| Crossfade animation | ❌ No            | ✔ Yes |
     implementation("androidx.navigation:navigation-compose:2.7.0")
+
+// Permission Handling
+    implementation("com.google.accompanist:accompanist-permissions:0.34.0")
+
 }

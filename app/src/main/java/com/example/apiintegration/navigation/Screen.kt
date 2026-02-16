@@ -2,6 +2,9 @@ package com.example.apiintegration.navigation
 
 
 sealed class Screen(val route: String) {
+    object CameraPermissionScreen : Screen("app_camare")
+    object ContactsPermissionScreen : Screen("app_contacts")
+    object ContactsListScreen : Screen("app_contacts_screen")
     object ShareTextScreen : Screen("app_share")
     object OpenDialerScreen : Screen("call-dail")
     object OpenBrowserScreen : Screen("open-browser")
