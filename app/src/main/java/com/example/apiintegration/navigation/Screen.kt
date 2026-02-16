@@ -5,6 +5,8 @@ sealed class Screen(val route: String) {
     object CameraPermissionScreen : Screen("app_camare")
     object ContactsPermissionScreen : Screen("app_contacts")
     object ContactsListScreen : Screen("app_contacts_screen")
+    object WhatsAppScreen : Screen("app_whatsapp_screen")
+    object BluetoothScanScreen : Screen("app_bluetooth_screen")
     object ShareTextScreen : Screen("app_share")
     object OpenDialerScreen : Screen("call-dail")
     object OpenBrowserScreen : Screen("open-browser")

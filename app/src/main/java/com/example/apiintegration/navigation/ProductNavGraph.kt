@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.apiintegration.presentation.form.ProfileScreen
+import androidx.navigation.navDeepLink
 import com.example.apiintegration.presentation.products.ProductDetailScreen
 import com.example.apiintegration.presentation.products.ProductList
 
@@ -20,7 +20,13 @@ fun NavGraphBuilder.productNavGraph(navController: NavController) {
     }
 
 
-    composable(route = Screen.ProductList.route) {
+    composable(route = Screen.ProductList.route,
+        deepLinks = listOf(
+            navDeepLink {
+                uriPattern = "myapp://sam"
+            }
+        )
+        ) {
         ProductList(navController)
     }
 
