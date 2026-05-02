@@ -1,5 +1,8 @@
 package com.example.apiintegration.domain.model.recipe
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class Recipe(
     val id: Long,
     val name: String,

@@ -18,9 +18,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -96,28 +93,11 @@ class AuthViewModel @Inject constructor(
     }
 
 
-    fun loginValidation(
-        username: String, password: String, phone: String, profileImage: Uri?,
-        context: Context,
-    ) {
-        AppLogger.d("--------------", "hello")
-        AppLogger.d(profileImage.toString(), "profileImage")
-        val imageBytes = readImageBytes(context = context, profileImage)
-        AppLogger.d(imageBytes.toString(), "imageBytes")
-        val requestBody = imageBytes.toRequestBody("image/*".toMediaType())
-        AppLogger.d(requestBody.toString(), "requestBody")
-
-        val multipartBody = MultipartBody.Part.createFormData(
-            name = "profile_image",
-            filename = "profile.jpg",
-            body = requestBody
-        )
-
-        AppLogger.d(multipartBody.toString(), "multipartBody")
-
-
-//        Temp data for room database
-        if (username.isBlank() || password.isBlank()) return
+    fun loginValidation(username: String, password: String, phone: String) {
+        if (username.isBlank() || password.isBlank()) {
+            _uiState.value = AuthUiState.Error("Username and password are required")
+            return
+        }
         _uiState.value = AuthUiState.Loading
         viewModelScope.launch {
             try {
